@@ -1,0 +1,4 @@
+20.01.2024: 
+    project setup form this link: https://ashleyalexjacob.medium.com/flask-api-folder-guide-2023-6fd56fe38c00
+    DO NOT FOGET TO CREATE .env file 
+    to install requirements: pip -r install requirements.txt
