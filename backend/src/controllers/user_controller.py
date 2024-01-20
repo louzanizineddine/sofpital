@@ -1,6 +1,7 @@
 from flask import request, Response, json, Blueprint, jsonify
 from src.models.user_model import User
 import base64
+from src import db
 
 # user controller blueprint to be registered with api blueprint
 user = Blueprint("user", __name__)
@@ -31,8 +32,13 @@ def get_user_profile(user_id):
 # route for Update the user's profile information.
 @user.route('/profile', methods = ["PUT"])
 def update_user_profile():
-    return Response(
-        response=json.dumps({'status': "success"}),
-        status=200,
-        mimetype='application/json'
-    )
+    data = request.get_json()
+    user = User.query.get(data['id'])
+    for key, val in data.items():
+        if key == 'profile_picture_blob' and val is not None:
+            # Convert base64-encoded string to bytes
+            val = base64.b64decode(val)
+        setattr(user, key, val)
+    db.session.commit()
+    return jsonify({'message': 'User updated successfully'}), 200
+    
