@@ -1,29 +1,27 @@
 from flask import request, Response, json, Blueprint
 
-# auth controller blueprint to be registered with api blueprint
-auth = Blueprint("auth", __name__)
+# meeting controller blueprint to be registered with api blueprint
 
-# route for Register.
-@auth.route('/register', methods = ["POST"])
-def handle_register():
+meeting = Blueprint("meeting", __name__)
+
+@meeting.route('/<meeting_id>')
+def get_meeting_by_id(meeting_id):
     return Response(
         response=json.dumps({'status': "success"}),
         status=200,
         mimetype='application/json'
     )
 
-# route for Login.
-@auth.route('/login', methods = ["POST"])
-def handle_login():
+@meeting.route('/<meeting_id>/cancel', methods = ["DELETE"])
+def delete_meeting_by_id(meeting_id):
     return Response(
         response=json.dumps({'status': "success"}),
         status=200,
         mimetype='application/json'
     )
 
-# route for Logout.
-@auth.route('/logout')
-def handle_logout():
+@meeting.route('/<meeting_id>/reschedule', methods = ["POST"])
+def post_meeting_reschedule(meeting_id):
     return Response(
         response=json.dumps({'status': "success"}),
         status=200,

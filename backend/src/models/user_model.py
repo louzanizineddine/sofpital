@@ -26,4 +26,5 @@ class User(db.Model):
     active = db.Column(db.Boolean(), default=False)
     last_time_online = db.Column(db.DateTime(), nullable=True)
     role = db.Column(db.Enum(Role), nullable=False)
+    tutor = db.relationship('Tutor', back_populates='user', uselist=False)
 
