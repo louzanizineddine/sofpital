@@ -9,9 +9,9 @@ class Offer(db.Model):
     description = db.Column(db.Text(), nullable=False)
     offer_date = db.Column(db.DateTime(), nullable=False)
     status = db.Column(db.String(20), default='pending', nullable=False)
-    tutor = db.relationship('Tutor', back_populates='offer')
-    learner = db.relationship('Learner', back_populates='offer')
-    post = db.relationship('Post', back_populates='offer')
+    tutor = db.relationship('Tutor', backref='offer')
+    learner = db.relationship('Learner', backref='offer')
+    post = db.relationship('Post', backref='offer')
 
     # def __repr__(self):
     #     return f"<Offer id={self.id}> tutor_id={self.tutor_id} learner_id={self.learner_id} 

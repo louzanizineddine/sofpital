@@ -15,4 +15,6 @@
 
     I changed the route /api/user/<user_id>/profile to /api/user/profile/<user_id>
 
+21.01.2024
+    I create functions(to_dict, all,....) in utils.py file. These functions will be used across multiple models.
     

@@ -32,10 +32,27 @@ def all(cls=None):
             new_dict[key] = to_dict(obj)
     return (new_dict)
 
-def get(cls, id):
+def get_by_id(cls, id):
     """query on the current database session"""
     if cls is not None:
         obj = cls.query.get(id)
         if obj is not None:
             return to_dict(obj)
     return None
+
+def add(obj):
+    """add an object to the current database session"""
+    db.session.add(obj)
+    db.session.commit()
+    return obj
+
+def delete(obj):
+    """delete an object from the current database session"""
+    db.session.delete(obj)
+    db.session.commit()
+    return obj
+
+def update(obj):
+    """update an object in the current database session"""
+    db.session.commit()
+    return obj
