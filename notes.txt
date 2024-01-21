@@ -14,3 +14,5 @@
     ALTER SEQUENCE "user_id_seq" RESTART WITH 1;
 
     I changed the route /api/user/<user_id>/profile to /api/user/profile/<user_id>
+
+    

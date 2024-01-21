@@ -41,6 +41,8 @@ migrate = Migrate(app, db)
 from src.models.user_model import User
 from src.models.tutor_model import Tutor
 from src.models.learner_model import Learner
+from src.models.post_model import Post
+from src.models.offer_model import Offer
 
 with app.app_context():
     db.create_all()
