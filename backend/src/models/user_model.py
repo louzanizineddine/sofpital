@@ -2,7 +2,6 @@ from src import db
 from enum import Enum
 from src import app
 
-
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key = True, unique=True)
     username = db.Column(db.String(50), unique=True)

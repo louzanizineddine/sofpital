@@ -2,6 +2,7 @@ from flask import request, Response, json, Blueprint, jsonify
 from src.models.user_model import User
 import base64
 from src import db
+from src.utils import to_dict, get, all
 
 # user controller blueprint to be registered with api blueprint
 user = Blueprint("user", __name__)
@@ -10,19 +11,20 @@ user = Blueprint("user", __name__)
 # route for Get the user's profile information.
 @user.route('/profile/<user_id>')
 def get_user_profile(user_id):
-    keys = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'password', 'university', 'gender', 'profile_picture_blob', 'online', 'active', 'last_time_online', 'role'] 
-    user = User.query.get(user_id)
+    # keys = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'password', 'university', 'gender', 'profile_picture_blob', 'online', 'active', 'last_time_online', 'role'] 
+    # user = User.query.get(user_id)
 
-    if user is None:
-        return jsonify({'message': 'User not found'}), 404
-    
-    dict = {}
-    for key in keys:
-        if key == 'profile_picture_blob' and getattr(user, key) is not None:
-                # Convert bytes to base64-encoded string
-                dict[key] = base64.b64encode(getattr(user, key)).decode('utf-8')
-        else:
-            dict[key] = getattr(user, key)
+    # if user is None:
+    #     return jsonify({'message': 'User not found'}), 404
+    # dict = to_dict(user)
+    # dict = {}
+    # for key in keys:
+    #     if key == 'profile_picture_blob' and getattr(user, key) is not None:
+    #             # Convert bytes to base64-encoded string
+    #             dict[key] = base64.b64encode(getattr(user, key)).decode('utf-8')
+    #     else:
+    #         dict[key] = getattr(user, key)
+    dict = get(User, user_id)
     return jsonify(dict)
 
 # route for Update the user's profile information.
@@ -37,4 +39,9 @@ def update_user_profile():
         setattr(user, key, val)
     db.session.commit()
     return jsonify({'message': 'User updated successfully'}), 200
-    
+
+@user.route('/')
+def get_all_users():
+    users = all(User)
+    list = [users[key] for key in users]
+    return jsonify(list)
