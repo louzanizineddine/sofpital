@@ -2,3 +2,15 @@
     project setup form this link: https://ashleyalexjacob.medium.com/flask-api-folder-guide-2023-6fd56fe38c00
     DO NOT FOGET TO CREATE .env file 
     to install requirements: pip -r install requirements.txt
+
+21.01.2024
+    I had trouble inserting the databe the eunum values
+    so I decided to remove them
+    and make a db migration
+    with flask db migrate -m "msg"
+    flask db upgrade
+
+    this command is to set teh auto increment field go back to 1 after deleting all rows on a table
+    ALTER SEQUENCE "user_id_seq" RESTART WITH 1;
+
+    I changed the route /api/user/<user_id>/profile to /api/user/profile/<user_id>
