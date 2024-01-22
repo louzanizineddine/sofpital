@@ -17,4 +17,5 @@
 
 21.01.2024
     I create functions(to_dict, all,....) in utils.py file. These functions will be used across multiple models.
-    
+    when you define a relationship in SQLAlchemy. You can use the "backref" parameter to create a reverse direction to the relationship automatically.
+    If you use "back_populates" parameter, you should specify the relationship on both sides.
