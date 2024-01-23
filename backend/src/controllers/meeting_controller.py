@@ -4,26 +4,23 @@ from flask import request, Response, json, Blueprint
 
 meeting = Blueprint("meeting", __name__)
 
-@meeting.route('/<meeting_id>')
+@meeting.route('/<meeting_id>' , methods = ["GET"])
 def get_meeting_by_id(meeting_id):
-    return Response(
-        response=json.dumps({'status': "success"}),
-        status=200,
-        mimetype='application/json'
-    )
+    """get all information about a meeting"""
+    pass
 
-@meeting.route('/<meeting_id>/cancel', methods = ["DELETE"])
-def delete_meeting_by_id(meeting_id):
-    return Response(
-        response=json.dumps({'status': "success"}),
-        status=200,
-        mimetype='application/json'
-    )
+@meeting.route('/<learner_id>', methods = ["GET"])
+def get_meetings_for_learner(learner_id):
+    """get all meetings for a learner"""
+    pass
 
-@meeting.route('/<meeting_id>/reschedule', methods = ["POST"])
-def post_meeting_reschedule(meeting_id):
-    return Response(
-        response=json.dumps({'status': "success"}),
-        status=200,
-        mimetype='application/json'
-    )
+
+@meeting.route('/<tutor_id>', methods = ["GET"])
+def get_meetings_for_tutor(tutor_id):
+    """get all meetings for a tutor"""
+    pass
+
+@meeting.route('/', methods = ["POST"])
+def create_new_meeting():
+    """create a new meeting"""
+    pass

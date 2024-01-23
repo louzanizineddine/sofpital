@@ -1,5 +1,4 @@
 from src import db
-from src import app
 
 
 class Learner(db.Model):
