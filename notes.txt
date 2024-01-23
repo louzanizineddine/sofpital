@@ -1,4 +1,4 @@
-20.01.2024: 
+0.01.2024: 
     project setup form this link: https://ashleyalexjacob.medium.com/flask-api-folder-guide-2023-6fd56fe38c00
     DO NOT FOGET TO CREATE .env file 
     to install requirements: pip -r install requirements.txt
@@ -17,5 +17,11 @@
 
 21.01.2024
     I create functions(to_dict, all,....) in utils.py file. These functions will be used across multiple models.
-    when you define a relationship in SQLAlchemy. You can use the "backref" parameter to create a reverse direction to the relationship automatically.
-    If you use "back_populates" parameter, you should specify the relationship on both sides.
+
+23.01.2024
+    when a user visits his profile:
+        => get all info about his account
+        => get all posts(if learner) or get offers (if tutor)
+        => get all meetings (done and future planned)
+
+    when sending a data to update a profile we think there is no need to update all infos only modified one.

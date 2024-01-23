@@ -2,36 +2,40 @@ from flask import request, Response, json, Blueprint, jsonify
 from src.models.user_model import User
 import base64
 from src import db
-from src.utils import get_by_id, all, update
+from src.utils import get_by_id, all, update, add, delete
 
 # user controller blueprint to be registered with api blueprint
 user = Blueprint("user", __name__)
 
 
 # route for Get the user's profile information.
-@user.route('/profile/<user_id>')
-def get_user_profile(user_id):
-    # keys = ['id', 'username', 'first_name', 'last_name', 'email', 'phone_number', 'birthdate', 'password', 'university', 'gender', 'profile_picture_blob', 'online', 'active', 'last_time_online', 'role'] 
-    # user = User.query.get(user_id)
-
-    # if user is None:
-    #     return jsonify({'message': 'User not found'}), 404
-    # dict = to_dict(user)
-    # dict = {}
-    # for key in keys:
-    #     if key == 'profile_picture_blob' and getattr(user, key) is not None:
-    #             # Convert bytes to base64-encoded string
-    #             dict[key] = base64.b64encode(getattr(user, key)).decode('utf-8')
-    #     else:
-    #         dict[key] = getattr(user, key)
+@user.route('/<user_id>')
+def get_user(user_id):
     dict = get_by_id(User, user_id)
     return jsonify(dict)
 
-# route for Update the user's profile information.
-@user.route('/profile', methods = ["PUT"])
-def update_user_profile():
+
+@user.route('/<user_id>/', methods = ["POST"])
+def create_user(user_id):
     data = request.get_json()
-    user = User.query.get(data['id'])
+    user = User(**data)
+    add(user)
+    return jsonify({'message': 'User created successfully'}), 200
+
+
+@user.route('/<user_id>', methods = ["DELETE"])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+    delete(user)
+    return jsonify({'message': 'User deleted successfully'}), 200
+
+
+
+# route for Update the user's profile information.
+@user.route('/<user_id>', methods = ["PUT"])
+def update_user_profile(user_id):
+    data = request.get_json()
+    user = User.query.get(user_id)
     for key, val in data.items():
         if key == 'profile_picture_blob' and val is not None:
             # Convert base64-encoded string to bytes
@@ -40,8 +44,8 @@ def update_user_profile():
     update(user)
     return jsonify({'message': 'User updated successfully'}), 200
 
-@user.route('/')
-def get_all_users():
-    users = all(User)
-    list = [users[key] for key in users]
-    return jsonify(list)
+# @user.route('/')
+# def get_all_users():
+#     users = all(User)
+#     list = [users[key] for key in users]
+#     return jsonify(list)
