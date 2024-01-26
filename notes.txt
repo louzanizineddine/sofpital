@@ -25,3 +25,7 @@
         => get all meetings (done and future planned)
 
     when sending a data to update a profile we think there is no need to update all infos only modified one.
+
+26.01.2024
+    i have finished emplementing all the routes and i have tested some of them. 
+    for the routes that are related to post, offer, meeting models i did't test them because tables are empty.
