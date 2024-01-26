@@ -7,7 +7,7 @@ class Post(db.Model):
     description = db.Column(db.Text(), nullable=False)
     poste_date = db.Column(db.DateTime(), nullable=False)
     status = db.Column(db.String(20), default='pending', nullable=False)
-    learner = db.relationship('Learner', backref='post')
+    learner = db.relationship('Learner', backref='posts')
 
     # def __repr__(self):
     #     return f"<Post id={self.id}> learner_id={self.learner_id} title={self.title} 

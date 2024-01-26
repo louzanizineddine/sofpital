@@ -8,9 +8,9 @@ class Meeting(db.Model):
     post_id = db.Column(db.Integer(), db.ForeignKey('post.id'), nullable=False)
     date = db.Column(db.DateTime(), nullable=False)
     duration = db.Column(db.Integer(), nullable=False)
-    tutor = db.relationship('Tutor', backref='meeting')
+    tutor = db.relationship('Tutor', backref='meetings')
     # feedback = db.Column(db.Text(), nullable=True)
-    learner = db.relationship('Learner', backref='meeting')
+    learner = db.relationship('Learner', backref='meetings')
     offer = db.relationship('Offer', backref='meeting')
     post = db.relationship('Post', backref='meeting')
 
