@@ -6,6 +6,9 @@ from src.utils import all, add
 auth = Blueprint("auth", __name__)
 
 # route for signup.
+
+# add hashing 
+# handle errors
 @auth.route('/signup', methods = ["POST"])
 def signup():
     if not request.get_json():
@@ -16,6 +19,7 @@ def signup():
     return jsonify({'message': 'User created successfully'}), 200
 
 
+
 # route for Login.
 @auth.route('/login', methods = ["POST"])
 def login():
@@ -24,6 +28,7 @@ def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
+    # hash the password and compare it with the one in the database
     if not email or not password:
         return jsonify({"error": "Both email and password are required"}), 400
     users = all(User)

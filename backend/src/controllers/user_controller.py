@@ -26,7 +26,7 @@ def create_user():
     add(user)
     return jsonify({'message': 'User created successfully'}), 200
 
-
+# when delete a user, we need to delete all the posts and offers that the user created
 @user.route('/<user_id>', methods = ["DELETE"])
 def delete_user(user_id):
     user = User.query.get(user_id)

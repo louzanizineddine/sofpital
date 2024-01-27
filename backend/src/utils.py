@@ -56,3 +56,15 @@ def update(obj):
     """update an object in the current database session"""
     db.session.commit()
     return obj
+
+def check_unique_email(email):
+    """check if email is unique"""
+    if User.query.filter_by(email=email).first() is not None:
+        return False
+    return True
+
+def check_unique_username(username):
+    """check if username is unique"""
+    if User.query.filter_by(username=username).first() is not None:
+        return False
+    return True

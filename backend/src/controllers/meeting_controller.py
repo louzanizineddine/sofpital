@@ -13,7 +13,7 @@ def get_meeting_by_id(meeting_id):
     """get all information about a meeting"""
     meeting = Meeting.query.get(meeting_id)
     if not meeting:
-        abort(404)
+        return jsonify({"error": "Meeting not found"}), 404
     return jsonify(to_dict(meeting))
 
 @meeting.route('/<learner_id>', methods = ["GET"])
@@ -21,7 +21,7 @@ def get_meetings_for_learner(learner_id):
     """get all meetings for a learner"""
     learner = Learner.query.get(learner_id)
     if not learner:
-        abort(404)
+        return jsonify({"error": "Learner not found"}), 404
     list_meetings = []
     for meeting in learner.meetings:
         list_meetings.append(to_dict(meeting))
@@ -33,7 +33,7 @@ def get_meetings_for_tutor(tutor_id):
     """get all meetings for a tutor"""
     tutor = Tutor.query.get(tutor_id)
     if not tutor:
-        abort(404)
+        return jsonify({"error": "Tutor not found"}), 404
     list_meetings = []
     for meeting in tutor.meetings:
         list_meetings.append(to_dict(meeting))
