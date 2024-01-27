@@ -7,4 +7,5 @@ class Tutor(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'), nullable=False)
     biography = db.Column(db.Text(), nullable=True)
     available = db.Column(db.Boolean(), default=True)
-    user = db.relationship('User', back_populates='tutor')
+    user = db.relationship('User', back_populates='tutor', uselist=False)
+    tutor = db.relationship('Tutor', backref='offers', cascade='all, delete-orphan')

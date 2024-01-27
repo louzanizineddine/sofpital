@@ -42,3 +42,7 @@
     pagination
     file upload
     user image
+
+    for the problem of deletion i think i solve it you can check and test it. 
+    if i delete learner or tutor is all the meetings related to them has to be deleted!!!!?
+    
