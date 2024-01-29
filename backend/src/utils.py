@@ -78,65 +78,66 @@ def hash_password(password):
 def check_password(input_password, hashed_password):
     return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
-def is_strong_password(password):
-    # Check length
-    if len(password) < 8:
-        return False
 
-    # Check for at least one uppercase letter
-    if not re.search(r'[A-Z]', password):
-        return False
+# def is_strong_password(password):
+#     # Check length
+#     if len(password) < 8:
+#         return False
 
-    # Check for at least one lowercase letter
-    if not re.search(r'[a-z]', password):
-        return False
+#     # Check for at least one uppercase letter
+#     if not re.search(r'[A-Z]', password):
+#         return False
 
-    # Check for at least one digit
-    if not re.search(r'\d', password):
-        return False
+#     # Check for at least one lowercase letter
+#     if not re.search(r'[a-z]', password):
+#         return False
 
-    # Check for at least one special character (excluding space)
-    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-        return False
+#     # Check for at least one digit
+#     if not re.search(r'\d', password):
+#         return False
 
-    # Check for no spaces
-    if ' ' in password:
-        return False
+#     # Check for at least one special character (excluding space)
+#     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+#         return False
 
-    return True
+#     # Check for no spaces
+#     if ' ' in password:
+#         return False
 
-def is_valid_email(email):
-    # Define a regular expression for a basic email validation
-    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+#     return True
 
-    # Use re.match to check if the email matches the pattern
-    if re.match(email_regex, email):
-        return True
-    else:
-        return False
+# def is_valid_email(email):
+#     # Define a regular expression for a basic email validation
+#     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
-def is_valid_phone_number(phone_number):
-    # Define a regular expression pattern for a basic phone number
-    pattern = re.compile(r'^\+?[0-9]{1,4}[\s.-]?[0-9]{1,15}$')
+#     # Use re.match to check if the email matches the pattern
+#     if re.match(email_regex, email):
+#         return True
+#     else:
+#         return False
 
-    # Check if the phone number matches the pattern
-    return bool(re.match(pattern, phone_number))
+# def is_valid_phone_number(phone_number):
+#     # Define a regular expression pattern for a basic phone number
+#     pattern = re.compile(r'^\+?[0-9]{1,4}[\s.-]?[0-9]{1,15}$')
 
-def is_valid_birthdate(birthdate_str):
-    try:
-        # Try to parse the date string
-        datetime.strptime(birthdate_str, '%Y-%m-%d')
-        return True
-    except ValueError:
-        # If parsing fails, it's an invalid date format
-        return False
+#     # Check if the phone number matches the pattern
+#     return bool(re.match(pattern, phone_number))
+
+# def is_valid_birthdate(birthdate_str):
+#     try:
+#         # Try to parse the date string
+#         datetime.strptime(birthdate_str, '%Y-%m-%d')
+#         return True
+#     except ValueError:
+#         # If parsing fails, it's an invalid date format
+#         return False
     
-def validate_role(role):
-    if role not in ["tutor", "learner"]:
-        return False
-    return True
+# def validate_role(role):
+#     if role not in ["tutor", "learner"]:
+#         return False
+#     return True
 
-def validate_gender(gender):
-    if gender not in ["male", "female"]:
-        return False
-    return True
+# def validate_gender(gender):
+#     if gender not in ["male", "female"]:
+#         return False
+#     return True
