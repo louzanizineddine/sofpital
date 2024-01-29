@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from src.config.config import Config
 from dotenv import load_dotenv
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.orm import DeclarativeBase
@@ -10,6 +11,11 @@ load_dotenv()
 
 # declaring flask application
 app = Flask(__name__)
+
+# CORS(app)
+# assuming that the frontend is running on port 5173
+# making our application to accept requests from the frontend
+CORS(app)
 
 # calling the dev configuration
 config = Config().dev_config
