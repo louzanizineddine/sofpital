@@ -11,5 +11,7 @@ console.log(user.value);
 </script>
 
 <template>
-    <div>home page</div>
+
+<section class="bg-gray-50 dark:bg-gray-900">
+</section>
 </template>

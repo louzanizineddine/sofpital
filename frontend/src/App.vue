@@ -7,7 +7,7 @@ import Register from './components/Register.vue';
 </script>
 
 <template>
-  <main>
+  <main class="dark">
     <Navbar></Navbar>
     <RouterView></RouterView>
   </main>
