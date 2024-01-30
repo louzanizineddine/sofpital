@@ -6,3 +6,4 @@ Flask-SQLAlchemy
 Flask-migrate
 flask-bcrypt
 psycopg2-binary
+bcrypt

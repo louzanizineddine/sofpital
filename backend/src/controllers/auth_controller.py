@@ -9,9 +9,9 @@ auth = Blueprint("auth", __name__)
 # def index():
 #     return jsonify({"message": "Welcome to the auth controller"}), 200
 # route for signup.
-# add hashing 
+# add hashing
 # handle errors
-@auth.route('/signup', methods = ["POST"])
+@auth.route('/signup', methods=["POST"])
 def signup():
     if not request.get_json():
         abort(400, description="Not a JSON")
@@ -38,23 +38,34 @@ def signup():
     return jsonify({'message': 'User created successfully'}), 200
 
 
-
 # route for Login.
-@auth.route('/login', methods = ["GET"])
+@auth.route('/login', methods=["POST"])
 def login():
-    # get the email and password from the request
-    print(request)
-    return jsonify({"message": "Login successfully"}), 200
-    # if not request.get_json():
-    #     abort(400, description="Not a JSON")
-    # data = request.get_json()
-    # email = data.get('email')
-    # password = data.get('password')
-    # # hash the password and compare it with the one in the database
-    # if not email or not password:
-    #     return jsonify({"error": "Both email and password are required"}), 400
-    # users = all(User)
-    # for user in users:
-    #     if user['email'] == email and check_password(password, user['password']):
-    #         return jsonify({"message": "Login successfully"}), 200
-    # return jsonify({"error": "Invalid username or password"}), 401
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    print(email, password)
+
+    if not email or not password:
+        return jsonify({"error": "Both email and password are required"}), 400
+
+    # search for the user with the email with sqlalchemy
+
+    user = User.query.filter_by(email=email).first()
+    print(user)
+    if not user:
+        return jsonify({"error": "Invalid username or password"}), 401
+    else:
+        if user.password == password:
+            return jsonify(
+                {"status": "success",
+                 "message": "Login successfully",
+                 "user": {
+                     "id": user.id,
+                     "username": user.username,
+                     "email": user.email,
+                     "role": user.role
+                 }}), 200
+        return jsonify({"error": "Invalid username or password"}), 401
