@@ -25,7 +25,7 @@ def signup():
     #     return jsonify({'error': 'Username already exists'}), 400
     # data['password'] = hash_password(data['password'])
     user = User(**data)
-    user.info();
+    user.info()
     add(user)
 
     # if user it tutor add to tutor table
