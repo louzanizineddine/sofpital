@@ -1,5 +1,7 @@
 from flask import request, Response, json, Blueprint, abort, jsonify
 from src.models.user_model import User
+from src.models.tutor_model import Tutor
+from src.models.learner_model import Learner
 from src.utils import all, add
 # auth controller blueprint to be registered with api blueprint
 auth = Blueprint("auth", __name__)
@@ -25,6 +27,18 @@ def signup():
     user = User(**data)
     user.info();
     add(user)
+
+    # if user it tutor add to tutor table
+    # if user it learner add to learner table
+    # if user it admin add to admin table
+
+    if user.role == "tutor":
+        tutor= Tutor(user_id=user.id)
+        add(tutor)
+    else:
+        learner= Learner(user_id=user.id)
+        add(learner)
+
     return jsonify({'status': 'success', 'message': 'User created successfully'}), 200
 
 

@@ -44,7 +44,7 @@ class User(db.Model):
 
     def generate_token(self):
         payload = {
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=1),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=60),
             'iat': datetime.datetime.utcnow(),
             'sub': self.id
         }
@@ -53,5 +53,6 @@ class User(db.Model):
             app.config.get('SECRET_KEY'),
             algorithm='HS256'
         )
+    
     def info(self):
         return f"User: {self.username} {self.email} {self.password}";

@@ -18,6 +18,15 @@ def get_user(current_user, user_id):
     return jsonify(to_dict(user))
 
 
+#profile
+@user.route('/profile')
+@token_required
+def get_user_profile(current_user):
+    # user info + tutor info + learner info
+    # history of all posts if learner
+    # history of all offers if tutor
+    # history of all meetings
+
 @user.route('/', methods = ["POST"])
 def create_user():
     if not request.get_json():
