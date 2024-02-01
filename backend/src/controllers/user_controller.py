@@ -40,6 +40,10 @@ def get_user_profile(current_user):
         if learner_profile:
             user_dict = to_dict(user)
             learner_dict = to_dict(learner_profile)
+            posts = learner_profile.posts
+            meetings = learner_profile.meetings
+            learner_dict['posts'] = posts
+            learner_dict['meetings'] = meetings
 
             # Merge learner dictionary into user dictionary
             learner_dict.update(user_dict)
@@ -54,6 +58,10 @@ def get_user_profile(current_user):
         if tutor_profile:
             user_dict = to_dict(user)
             tutor_dict = to_dict(tutor_profile)
+            offers = tutor_profile.offers
+            meetings = tutor_profile.meetings
+            tutor_dict['offers'] = offers
+            tutor_dict['meetings'] = meetings
 
             # Merge tutor dictionary into user dictionary
             tutor_dict.update(user_dict)

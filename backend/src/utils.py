@@ -105,6 +105,13 @@ def token_required(f):
         return f(current_user, *args, **kwargs)
     return decorated
 
+def pagination(query, page, per_page):
+    """returns a dictionary containing the pagination details"""
+    start_index = (page - 1) * per_page
+    end_index = start_index + per_page
+    if query is not None:
+        paginated_items = query[start_index:end_index]
+    return paginated_items
 # def is_strong_password(password):
 #     # Check length
 #     if len(password) < 8:
