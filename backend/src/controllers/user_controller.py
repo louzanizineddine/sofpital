@@ -2,7 +2,7 @@ from flask import request, Response, json, Blueprint, jsonify, abort
 from src.models.user_model import User
 import base64
 from src import db
-from src.utils import get_by_id, all, update, add, delete, to_dict
+from src.utils import get_by_id, all, update, add, delete, to_dict, token_required
 
 # user controller blueprint to be registered with api blueprint
 user = Blueprint("user", __name__)
@@ -10,7 +10,8 @@ user = Blueprint("user", __name__)
 
 # route for Get the user's profile information.
 @user.route('/<user_id>')
-def get_user(user_id):
+@token_required
+def get_user(current_user, user_id):
     user = User.query.get(user_id)
     if not user:
         abort(404)
@@ -28,7 +29,8 @@ def create_user():
 
 # when delete a user, we need to delete all the posts and offers that the user created
 @user.route('/<user_id>', methods = ["DELETE"])
-def delete_user(user_id):
+@token_required
+def delete_user(current_user, user_id):
     user = User.query.get(user_id)
     if not user:
         abort(404)
@@ -53,9 +55,3 @@ def update_user_profile(user_id):
         setattr(user, key, val)
     update(user)
     return jsonify({'message': 'User updated successfully'}), 200
-
-# @user.route('/')
-# def get_all_users():
-#     users = all(User)
-#     list = [users[key] for key in users]
-#     return jsonify(list)

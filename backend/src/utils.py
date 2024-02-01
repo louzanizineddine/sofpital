@@ -4,8 +4,11 @@ from src.models.learner_model import Learner
 from src.models.tutor_model import Tutor
 import base64
 import bcrypt
-import re
+from src import app
 from datetime import datetime
+from functools import wraps
+from flask import request, jsonify
+import jwt
 
 time = "%Y-%m-%dT%H:%M:%S"
 classes = {"user": User, "learner": Learner, "tutor": Tutor}
@@ -78,6 +81,29 @@ def hash_password(password):
 def check_password(input_password, hashed_password):
     return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        # jwt is passed in the request header
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed
+        if not token:
+            return jsonify({'message': 'Token is missing !!'}), 401
+        try:
+            # decoding the payload to fetch the stored details
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            current_user = User.query.filter_by(id=data['sub']).first()
+        except:
+            return jsonify({
+                'message': 'Token is not valid'
+            }), 401
+        # returns the current logged in users contex to the routes
+        return f(current_user, *args, **kwargs)
+    return decorated
 
 # def is_strong_password(password):
 #     # Check length

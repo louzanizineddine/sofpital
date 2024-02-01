@@ -1,6 +1,6 @@
 from flask import request, Response, json, Blueprint, abort, jsonify
 from src.models.user_model import User
-from src.utils import all, add, hash_password, check_password, check_unique_email, check_unique_username
+from src.utils import all, add
 # auth controller blueprint to be registered with api blueprint
 auth = Blueprint("auth", __name__)
 
@@ -21,8 +21,9 @@ def signup():
     #     return jsonify({'error': 'Email already exists'}), 400
     # if not check_unique_username(data['username']):
     #     return jsonify({'error': 'Username already exists'}), 400
-    data['password'] = hash_password(data['password'])
+    # data['password'] = hash_password(data['password'])
     user = User(**data)
+    user.info();
     add(user)
     return jsonify({'status': 'success', 'message': 'User created successfully'}), 200
 
@@ -31,27 +32,10 @@ def signup():
 @auth.route('/login', methods=["POST"])
 def login():
     if not request.get_json():
-        abort(400, description="Not a JSON")
+        return jsonify({"error": "Not JSON"}), 400
     data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
-
-    if not email or not password:
-        return jsonify({"error": "Both email and password are required"}), 400
-
-    # search for the user with the email with sqlalchemy
-    user = User.query.filter_by(email=email).first()
+    user = User.authenticate(**data)
     if not user:
-        return jsonify({"error": "Invalid username or password"}), 401
-    else:
-        if check_password(password, user.password):
-            return jsonify(
-                {"status": "success",
-                 "message": "Login successfully",
-                 "user": {
-                     "id": user.id,
-                     "username": user.username,
-                     "email": user.email,
-                     "role": user.role
-                 }}), 200
-        return jsonify({"error": "Invalid username or password"}), 401
+        return jsonify({"error": "Authentication err"}), 400
+
+    return jsonify({"token": user.generate_token(), "status": "success"}), 200

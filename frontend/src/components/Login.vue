@@ -20,6 +20,7 @@ const HandleLogin = async () => {
     console.log(response);
 
     if (response.status === 'success') {
+        localStorage.setItem('token', response.token);
         router.push({ name: 'Home' });
     }
 };

@@ -25,6 +25,7 @@ app.env = config.ENV
 
 # Path for our local sql lite database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQLALCHEMY_DATABASE_URI_DEV")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
 # To specify to track modifications of objects and emit signals
 # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS")
