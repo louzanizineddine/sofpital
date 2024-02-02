@@ -1,5 +1,7 @@
 from flask import request, Response, json, Blueprint, jsonify, abort
 from src.models.user_model import User
+from src.models.learner_model import Learner
+from src.models.tutor_model import Tutor
 import base64
 from src import db
 from src.utils import get_by_id, all, update, add, delete, to_dict, token_required
@@ -22,6 +24,55 @@ def get_user(current_user, user_id):
 @user.route('/profile')
 @token_required
 def get_user_profile(current_user):
+    user_id = current_user.id
+
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    if user.role == 'learner':
+        learner_profile = Learner.query.filter_by(user_id=user.id).first()
+
+        if learner_profile:
+            user_dict = to_dict(user)
+            learner_dict = to_dict(learner_profile)
+            posts = learner_profile.posts
+            meetings = learner_profile.meetings
+            learner_dict['posts'] = posts
+            learner_dict['meetings'] = meetings
+
+            # Merge learner dictionary into user dictionary
+            learner_dict.update(user_dict)
+
+            # Return the merged dictionary under the 'learner_profile' key
+            return jsonify({'learner_profile': learner_dict})
+        else:
+            return jsonify({'error': 'Learner profile not found'}), 404
+
+    elif user.role == 'tutor':
+        tutor_profile = Tutor.query.filter_by(user_id=user.id).first()
+        if tutor_profile:
+            user_dict = to_dict(user)
+            tutor_dict = to_dict(tutor_profile)
+            offers = tutor_profile.offers
+            meetings = tutor_profile.meetings
+            tutor_dict['offers'] = offers
+            tutor_dict['meetings'] = meetings
+
+            # Merge tutor dictionary into user dictionary
+            tutor_dict.update(user_dict)
+
+            # Return the merged dictionary under the 'tutor_profile' key
+            return jsonify({'tutor_profile': tutor_dict})
+        else:
+            return jsonify({'error': 'Tutor profile not found'}), 404
+
+    else:
+        return jsonify({'error': 'Invalid user role'}), 400
     # user info + tutor info + learner info
     # history of all posts if learner
     # history of all offers if tutor
