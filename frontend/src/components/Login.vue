@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/user'
+
+const userState = useUserStore()
 
 const router = useRouter();
 const form = ref({
@@ -20,8 +23,8 @@ const HandleLogin = async () => {
     console.log(response);
 
     if (response.status === 'success') {
-        localStorage.setItem('token', response.token);
-        router.push({ name: 'Home' });
+        userState.login(response.token);
+        router.push({ name: 'Space' });
     }
 };
 </script>
