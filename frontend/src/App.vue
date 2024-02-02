@@ -9,8 +9,8 @@ import { useUserStore } from './stores/user';
 </script>
 
 <template>
-  <main class="dark">
-    <template v-if="!userState.loggedIn">
+  <main class="">
+    <template v-if="userState.loggedIn">
       <Navbar />
     </template>
     <template v-else>

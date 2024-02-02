@@ -1,6 +1,10 @@
 <script setup>
     import { useUserStore } from '../stores/user';
     import Header from './Header.vue';
+    import PostInput from './PostInput.vue';
+    import UpcomingMeetings from './UpcomingMeetings.vue';
+    import 'flowbite/dist/flowbite.js'
+
     const userState = useUserStore();
     // import { ref, onMounted} from 'vue';
     // import checkToken  from '../utils.js';
@@ -34,8 +38,12 @@
 </script>
 
 <template>
+    <div class="container mx-auto">
+        <Header />
 
-<section class="bg-gray-50 dark:bg-gray-900">
-   <Header />
-</section>
+        <div class="flex flex-row justify-evenly">
+            <PostInput />
+            <UpcomingMeetings/>
+        </div>
+    </div>
 </template>
