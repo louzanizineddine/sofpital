@@ -5,7 +5,7 @@ class Post(db.Model):
     learner_id = db.Column(db.Integer(), db.ForeignKey('learner.id'), nullable=False)
     title = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(), nullable=False)
-    poste_date = db.Column(db.DateTime(),  nullable=False)
+    poste_date = db.Column(db.DateTime(),nullable=False)
     status = db.Column(db.String(20), default='pending', nullable=False)
     # def __repr__(self):
     #     return f"<Post id={self.id}> learner_id={self.learner_id} title={self.title} 

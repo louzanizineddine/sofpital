@@ -1,6 +1,6 @@
 from flask import request, Blueprint, jsonify, abort
 from src.models.learner_model import Learner
-from src.utils import all, get_by_id, to_dict, add, update
+from src.utils import all, get_by_id, to_dict, add, update, token_required
 from src.models.user_model import User
 from src.models.post_model import Post
 from src.models.offer_model import Offer
@@ -10,7 +10,8 @@ learner = Blueprint("learner", __name__)
 
 
 @learner.route('/<learner_id>', methods = ["GET"])
-def get_learner(learner_id):
+@token_required
+def get_learner(current_user, learner_id):
     """Get the learner's profile information."""
     """we can just call /api/user/<user_id>"""
     learner = Learner.query.get(learner_id)
@@ -26,7 +27,8 @@ def get_learner(learner_id):
 
 
 @learner.route('/<learner_id>/posts', methods = ["GET"])
-def get_posts_for_learner(learner_id):
+@token_required
+def get_posts_for_learner(current_user, learner_id):
     """Get all questions asked by the learner."""
     """select * from post where learner_id = learner_id"""
     list_posts = []
@@ -38,7 +40,8 @@ def get_posts_for_learner(learner_id):
     return jsonify(list_posts)
 
 @learner.route('/<learner_id>/posts', methods = ["POST"])
-def creaet_new_post(learner_id):
+@token_required
+def creaet_new_post(current_user, learner_id):
     """Ask a question."""
     """insert into post (learner_id, title, description, poste_date, status) values (learner_id, title, description, poste_date, status)"""
     learner = Learner.query.get(learner_id)
@@ -47,15 +50,16 @@ def creaet_new_post(learner_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
     data = request.get_json()
+    print(data)
     post = Post(**data)
-    post.learner_id = learner_id
     add(post)
-    return jsonify(to_dict(post)), 200
+    return jsonify({"status": "success"}), 200
 
 
 
 @learner.route('/<learner_id>/posts/<post_id>', methods = ["GET"])
-def get_one_post_by_id(learner_id, post_id):
+@token_required
+def get_one_post_by_id(current_user, learner_id, post_id):
     """Get a question by its id."""
     """select * from post where id = post_id"""
     post = Post.query.get(post_id)
@@ -64,7 +68,8 @@ def get_one_post_by_id(learner_id, post_id):
     return jsonify(to_dict(post))
 
 @learner.route('/<learner_id>/posts/<post_id>/accept_offer/<offer_id>', methods = ["PUT"])
-def accept_offer(learner_id, post_id, offer_id):
+@token_required
+def accept_offer(current_user, learner_id, post_id, offer_id):
     """Accept an offer for a post."""
     """make sure to update the offer status to accepted as well"""
     """make sure to update the post status to accepted as well"""
@@ -87,7 +92,8 @@ def accept_offer(learner_id, post_id, offer_id):
 
 
 @learner.route('/<learner_id>/posts/<post_id>/reject_offer/<offer_id>', methods = ["PUT"])
-def reject_offer(learner_id, post_id, offer_id):
+@token_required
+def reject_offer(current_user, learner_id, post_id, offer_id):
     """Reject an offer for a post."""
     """make sure to update the offer status to be rejeced"""
     offer = Offer.query.get(offer_id)

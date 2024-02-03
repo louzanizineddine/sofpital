@@ -15,8 +15,17 @@ user = Blueprint("user", __name__)
 @token_required
 def get_user(current_user, user_id):
     user = User.query.get(user_id)
+    
     if not user:
         abort(404)
+    learner = Learner.query.filter_by(user_id=user_id).first()
+    tutor = Tutor.query.filter_by(user_id=user_id).first()
+
+    if learner:
+        user.learner_id = learner.id
+    if tutor:
+        user.tutor_id = tutor.id
+
     return jsonify(to_dict(user))
 
 

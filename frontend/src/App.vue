@@ -10,7 +10,7 @@ import { useUserStore } from './stores/user';
 
 <template>
   <main class="">
-    <template v-if="userState.loggedIn">
+    <template v-if="!userState.loggedIn">
       <Navbar />
     </template>
     <template v-else>
@@ -22,5 +22,5 @@ import { useUserStore } from './stores/user';
 
 <script setup>
 const userState = useUserStore();
-console.log({userState});
+// console.log({userState});
 </script>
