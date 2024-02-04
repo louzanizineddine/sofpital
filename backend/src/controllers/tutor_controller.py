@@ -1,13 +1,15 @@
 from flask import request, Response, json, Blueprint, jsonify, abort
 from src.models.tutor_model import Tutor
 from src.models.offer_model import Offer
-from src.utils import all, get_by_id, to_dict, add 
+from src.models.post_model import Post
+from src.utils import all, get_by_id, to_dict, add, token_required
 
 # tutor controller blueprint to be registered with api blueprint
 tutor = Blueprint("tutor", __name__)
 
 @tutor.route('/<tutor_id>', methods = ["GET"])
-def get_tutor(tutor_id):
+@token_required
+def get_tutor(current_user,tutor_id):
     """Get the tutor's profile information."""
     """we can just call /api/user/<user_id>"""
     tutor = Tutor.query.get(tutor_id)
@@ -16,8 +18,18 @@ def get_tutor(tutor_id):
     return jsonify(to_dict(tutor))
 
 
+@tutor.route('/<tutor_id>/recommended_posts', methods = ["GET"])
+@token_required
+def get_posts_for_tutor(current_user, tutor_id):
+    """return the last 10 recent posts by any learner."""
+    posts = Post.query.order_by(Post.id.desc()).limit(10).all()
+    return jsonify([post.to_dict() for post in posts])
+    
+
+
 @tutor.route('/<tutor_id>/offers', methods = ["GET"])
-def get_offers_for_tutor(tutor_id):
+@token_required
+def get_offers_for_tutor(current_user, tutor_id):
     """Get all offers offered by the tutor."""
     offer_list = []
     tutor = Tutor.query.get(tutor_id)
@@ -29,7 +41,8 @@ def get_offers_for_tutor(tutor_id):
 
 
 @tutor.route('/<tutor_id>/offers/post/<post_id>', methods = ["POST"])
-def creat_new_offer(tutor_id, post_id):
+@token_required
+def creat_new_offer(current_user, tutor_id, post_id):
     """
         Make an offer.
         we make sure that the tutor exists and the post exists.
@@ -54,7 +67,8 @@ def creat_new_offer(tutor_id, post_id):
 
 
 @tutor.route('/<tutor_id>/offers/<offer_id>', methods = ["GET"])
-def get_one_offer_by_id(tutor_id, offer_id):
+@token_required
+def get_one_offer_by_id(current_user, tutor_id, offer_id):
     offer = Offer.query.filter_by(id=offer_id, tutor_id=tutor_id).first()
     if offer is None:
         return jsonify({'error': 'Offer not found or offer does not belong to tutor'}), 404

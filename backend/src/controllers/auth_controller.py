@@ -52,4 +52,5 @@ def login():
     if not user:
         return jsonify({"error": "Authentication err"}), 400
 
-    return jsonify({"token": user.generate_token(), "status": "success"}), 200
+    return jsonify(
+        {"token": user.generate_token(), "status": "success", "role": user.role}), 200

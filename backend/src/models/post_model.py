@@ -10,3 +10,14 @@ class Post(db.Model):
     # def __repr__(self):
     #     return f"<Post id={self.id}> learner_id={self.learner_id} title={self.title} 
     #     description={self.description} status={self.status} poste_date={self.poste_date}"
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "learner_id": self.learner_id,
+            "title": self.title,
+            "description": self.description,
+            "poste_date": self.poste_date,
+            "status": self.status
+        }
