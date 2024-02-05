@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import 'flowbite/dist/flowbite.js';
 import Header from './Header.vue';
-import RecentPosts from './Tutor/RecentPosts.vue';
-
+import RecommendedPosts from './Tutor/RecommendedPosts.vue';
+import SentOffers from './Tutor/SentOffers.vue';
 const userState = useUserStore();
 </script>
 
@@ -14,7 +14,9 @@ const userState = useUserStore();
 
    <div class="flex flex-row">
       <div class="basis-3/4">
-         <RecentPosts />
+         <RecommendedPosts />
+
+         <SentOffers />
       </div>
    </div>
 </template>

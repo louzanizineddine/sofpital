@@ -1,4 +1,6 @@
 from flask import request, Response, json, Blueprint, jsonify, abort
+from sqlalchemy import exists
+from src import db
 from src.models.tutor_model import Tutor
 from src.models.offer_model import Offer
 from src.models.post_model import Post
@@ -54,16 +56,18 @@ def creat_new_offer(current_user, tutor_id, post_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
     
-    # check if the tutor already made an offer for this post
-    for offer in tutor.offers:
-        if offer.post_id == post_id:
-            return jsonify({"error": "You already made an offer for this post"}), 400
+    # check if the post exists
+    stmt = exists().where(Offer.post_id == post_id, Offer.tutor_id == tutor_id)
+    if db.session.query(stmt).scalar():
+        return jsonify({"error": "Tutor can only make one offer for a post"}), 400
+    
     data = request.get_json()
+    print(data)
     offer = Offer(**data)
     offer.tutor_id = tutor_id
     offer.post_id = post_id
     add(offer)
-    return jsonify(to_dict(offer)), 200
+    return jsonify({"status": "success"}), 200
 
 
 @tutor.route('/<tutor_id>/offers/<offer_id>', methods = ["GET"])

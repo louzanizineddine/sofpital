@@ -49,4 +49,6 @@
 28.01.2024
     I implemented checks for the registration. I don't know if I do them all or I forget something to check.
     hashpasswords is done (I hope it is correct).
-    
+
+05.02.2024
+    we make sure when we recommend a post for a tutor it does not recommend a post he already made an offer to

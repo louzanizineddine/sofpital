@@ -14,3 +14,16 @@ class Offer(db.Model):
     # def __repr__(self):
     #     return f"<Offer id={self.id}> tutor_id={self.tutor_id} learner_id={self.learner_id} 
     #     post_id={self.post_id} title={self.title} description={self.description} offer_date={self.offer_date}"
+
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "tutor_id": self.tutor_id,
+            "learner_id": self.learner_id,
+            "post_id": self.post_id,
+            "title": self.title,
+            "description": self.description,
+            "offer_date": self.offer_date,
+            "status": self.status
+        }

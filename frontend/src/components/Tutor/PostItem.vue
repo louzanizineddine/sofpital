@@ -21,10 +21,10 @@
           <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
             <label for="title" class="label mt-3">Offer title</label>
-            <input type="text" placeholder="Offer title" class="input input-bordered w-full max-w-xs" />
+            <input type="text" v-model="OfferForm.title" placeholder="Offer title" class="input input-bordered w-full max-w-xs" />
 
             <label for="description" class="label mt-3">Offer description</label>
-            <input type="text" placeholder="Offer description" class="input input-bordered w-full max-w-xs" />
+            <input type="text" v-model="OfferForm.description" placeholder="Offer description" class="input input-bordered w-full max-w-xs" />
             <br>
 
             <button @click.prevent="submitOffer" class="btn mt-4 mr-3 bg-blue-600 text-white">Submit</button>
@@ -38,7 +38,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useUserStore } from '../../stores/user';
+import {toast} from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
+const store = useUserStore();
 const props = defineProps(['post']);
 
 // Define showModal method to dynamically open the modal associated with each post
@@ -46,7 +50,46 @@ function showModal(postId) {
   document.getElementById(`modal_${postId}`).showModal();
 }
 
-function submitOffer() {
-  console.log(`${props.post.id} offer submitted`);
+// Define closeModal method to dynamically close the modal associated with each post
+function closeModal() {
+  document.getElementById(`modal_${props.post.id}`).close();
 }
+
+const OfferForm = ref({
+  title: '',
+  description: '',
+});
+
+async function submitOffer() {
+
+  const data = await fetch(`http://localhost:8000/api/tutor/${store.user.tutor_id}/offers/post/${props.post.id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('token'),
+    },
+    body: JSON.stringify({
+      title: OfferForm.value.title,
+      description: OfferForm.value.description,
+      learner_id: props.post.learner_id,
+      tutor_id: store.user.tutor_id,
+      post_id: props.post.id,
+      offer_date: new Date().toISOString(),
+    }),
+  });
+
+  const response = await data.json();
+  
+  if (response.status === 'success') {
+    console.log('Offer submitted successfully');
+    toast('Your offer have been added successfully', {type: 'success', timeout: 1500});
+    OfferForm.value.title = '';
+    OfferForm.value.description = '';
+    closeModal();
+  } else {
+    console.log('Offer submission failed');
+    toast('Your offer submission failed', {type: 'error', timeout: 1500});
+  }
+}
+
 </script>
