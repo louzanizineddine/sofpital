@@ -7,7 +7,7 @@ class Post(db.Model):
     description = db.Column(db.Text(), nullable=False)
     poste_date = db.Column(db.DateTime(),nullable=False)
     status = db.Column(db.String(20), default='pending', nullable=False)
-    # tags = db.column(arrar(srings))
+    tags = db.relationship('Tag', secondary='post_tag', backref='posts')
     # def __repr__(self):
     #     return f"<Post id={self.id}> learner_id={self.learner_id} title={self.title} 
     #     description={self.description} status={self.status} poste_date={self.poste_date}"
@@ -22,3 +22,12 @@ class Post(db.Model):
             "poste_date": self.poste_date,
             "status": self.status
         }
+
+class Tag(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+
+class PostTag(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    post_id = db.Column(db.Integer(), db.ForeignKey('post.id'), nullable=False)
+    tag_id = db.Column(db.Integer(), db.ForeignKey('tag.id'), nullable=False)

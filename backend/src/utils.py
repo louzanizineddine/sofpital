@@ -2,6 +2,7 @@ from src import db
 from src.models.user_model import User
 from src.models.learner_model import Learner
 from src.models.tutor_model import Tutor
+from src.models.offer_model import Offer
 import base64
 import bcrypt
 from src import app
@@ -80,6 +81,7 @@ def hash_password(password):
 
 def check_password(input_password, hashed_password):
     return bcrypt.checkpw(input_password.encode('utf-8'), hashed_password.encode('utf-8'))
+
 
 
 

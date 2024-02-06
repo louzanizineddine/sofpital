@@ -9,3 +9,14 @@ class Tutor(db.Model):
     available = db.Column(db.Boolean(), default=True)
     user = db.relationship('User', back_populates='tutor')
     offers = db.relationship('Offer', backref='tutor', cascade='all, delete-orphan')
+    subjects = db.relationship('Subject', secondary='tutor_subject', backref='tutors')
+
+class Subject(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+
+
+class TutorSubject(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    tutor_id = db.Column(db.Integer(), db.ForeignKey('tutor.id'), nullable=False)
+    subject_id = db.Column(db.Integer(), db.ForeignKey('subject.id'), nullable=False)

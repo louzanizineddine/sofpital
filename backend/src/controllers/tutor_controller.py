@@ -1,9 +1,10 @@
 from flask import request, Response, json, Blueprint, jsonify, abort
 from sqlalchemy import exists
 from src import db
-from src.models.tutor_model import Tutor
+from src.models.tutor_model import Tutor, TutorSubject, Subject
 from src.models.offer_model import Offer
-from src.models.post_model import Post
+from src.models.post_model import Post, PostTag, Tag
+
 from src.utils import all, get_by_id, to_dict, add, token_required
 
 # tutor controller blueprint to be registered with api blueprint
@@ -24,8 +25,39 @@ def get_tutor(current_user,tutor_id):
 @token_required
 def get_posts_for_tutor(current_user, tutor_id):
     """return the last 10 recent posts by any learner."""
-    posts = Post.query.order_by(Post.id.desc()).limit(10).all()
-    return jsonify([post.to_dict() for post in posts])
+    tutor = Tutor.query.get_or_404(tutor_id)
+
+    subjects = tutor.subjects
+
+    
+    recommended_posts = (
+        Post.query
+        .join(PostTag)
+        .join(Tag)
+        .join(TutorSubject)
+        .filter(TutorSubject.subject_id.in_([subject.id for subject in subjects]))
+        .all()
+    )
+
+    posts_with_offers = (
+        Post.query
+        .join(Offer, Offer.post_id == Post.id)
+        .filter(Offer.tutor_id == tutor_id)
+        .all()
+    )
+
+    # Get other posts (excluding the recommended and those with offers)
+    other_posts = Post.query.filter(
+        ~Post.id.in_([post.id for post in recommended_posts]),
+        ~Post.id.in_([post.id for post in posts_with_offers])
+    ).all()
+
+
+    all_posts = recommended_posts + other_posts
+    formatted_posts = [post.to_dict() for post in all_posts]
+    return jsonify({"recommended_posts": formatted_posts})
+    # posts = Post.query.order_by(Post.id.desc()).limit(10).all()
+    # return jsonify([post.to_dict() for post in posts])
     
 
 
