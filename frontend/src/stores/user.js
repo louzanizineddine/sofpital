@@ -8,6 +8,7 @@ export const useUserStore = defineStore('User', {
       loggedIn: checkToken() == null ? false : true,
       token: null,
       user: null,
+      newSentOffer: false
     }
   },
   actions: {

@@ -28,17 +28,16 @@ def get_posts_for_tutor(current_user, tutor_id):
     tutor = Tutor.query.get_or_404(tutor_id)
 
     subjects = tutor.subjects
-
-    
     recommended_posts = (
         Post.query
+        .select_from(Post)  # Specify the FROM clause first
         .join(PostTag)
         .join(Tag)
-        .join(TutorSubject)
-        .filter(TutorSubject.subject_id.in_([subject.id for subject in subjects]))
+        .join(TutorSubject, TutorSubject.subject_id.in_([subject.id for subject in subjects]))
         .all()
     )
 
+    print(recommended_posts)
     posts_with_offers = (
         Post.query
         .join(Offer, Offer.post_id == Post.id)
@@ -55,9 +54,9 @@ def get_posts_for_tutor(current_user, tutor_id):
 
     all_posts = recommended_posts + other_posts
     formatted_posts = [post.to_dict() for post in all_posts]
+    # print(formatted_posts)
     return jsonify({"recommended_posts": formatted_posts})
-    # posts = Post.query.order_by(Post.id.desc()).limit(10).all()
-    # return jsonify([post.to_dict() for post in posts])
+
     
 
 

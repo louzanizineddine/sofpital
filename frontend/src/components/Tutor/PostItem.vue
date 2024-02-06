@@ -86,6 +86,7 @@ async function submitOffer() {
     OfferForm.value.title = '';
     OfferForm.value.description = '';
     closeModal();
+    store.user.newSentOffer = true
   } else {
     console.log('Offer submission failed');
     toast('Your offer submission failed', {type: 'error', timeout: 1500});

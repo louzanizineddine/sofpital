@@ -31,7 +31,7 @@
     });
     const response = await data.json();
     console.log(response);
-    recommended_posts.value = response;
+    recommended_posts.value = response.recommended_posts;
     dataLoaded.value = true;
   });
   </script>
