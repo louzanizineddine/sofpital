@@ -24,10 +24,10 @@ class Post(db.Model):
         }
 
 class Tag(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, unique=True)
     name = db.Column(db.String(50), unique=True, nullable=False)
 
 class PostTag(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, unique=True)
     post_id = db.Column(db.Integer(), db.ForeignKey('post.id'), nullable=False)
     tag_id = db.Column(db.Integer(), db.ForeignKey('tag.id'), nullable=False)

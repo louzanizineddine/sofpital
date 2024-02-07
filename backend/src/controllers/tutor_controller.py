@@ -28,29 +28,36 @@ def get_posts_for_tutor(current_user, tutor_id):
     tutor = Tutor.query.get_or_404(tutor_id)
 
     subjects = tutor.subjects
-    recommended_posts = (
-        Post.query
-        .select_from(Post)  # Specify the FROM clause first
-        .join(PostTag)
-        .join(Tag)
-        .join(TutorSubject, TutorSubject.subject_id.in_([subject.id for subject in subjects]))
-        .all()
-    )
+    # recommended_posts = (
+    #     Post.query
+    #     .select_from(Post)  # Specify the FROM clause first
+    #     .join(PostTag)
+    #     .join(Tag)
+    #     .join(TutorSubject, TutorSubject.subject_id.in_([subject.id for subject in subjects]))
+    #     .all()
+    # )
 
-    print(recommended_posts)
+    # print(recommended_posts)
     posts_with_offers = (
         Post.query
         .join(Offer, Offer.post_id == Post.id)
         .filter(Offer.tutor_id == tutor_id)
         .all()
     )
-
+    recommended_posts = (
+        Post.query
+        .select_from(Post)
+        .join(PostTag)
+        .join(Tag)
+        .join(TutorSubject, TutorSubject.subject_id.in_([subject.id for subject in tutor.subjects]))
+        .filter(~Post.id.in_([post.id for post in posts_with_offers]))  # Exclude posts with offers
+        .all()
+    )
     # Get other posts (excluding the recommended and those with offers)
     other_posts = Post.query.filter(
         ~Post.id.in_([post.id for post in recommended_posts]),
         ~Post.id.in_([post.id for post in posts_with_offers])
     ).all()
-
 
     all_posts = recommended_posts + other_posts
     formatted_posts = [post.to_dict() for post in all_posts]

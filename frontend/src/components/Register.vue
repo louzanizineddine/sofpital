@@ -12,6 +12,7 @@
         last_name: '',
         gender: '',
         role: '',
+        subjects: [],
     });
 
     const handleRegister = async () => {
@@ -29,6 +30,15 @@
             router.push({ name: 'Login' });
         }
     };
+
+    const handleSubjectSelection = (subject) => {
+    const index = form.value.subjects.indexOf(subject);
+    if (index === -1) {
+        form.value.subjects.push(subject);
+    } else {
+        form.value.subjects.splice(index, 1);
+    }
+};
 </script>
 
 
@@ -120,6 +130,22 @@
                             </select>
                         </div>
 
+                        <div v-if="form.role === 'tutor'" class="mb-5">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Subjects
+                            </label>
+                            <div class="flex flex-wrap">
+                                <div
+                                    v-for="subject in ['Linux', 'Science', 'English', 'History', 'Programming']"
+                                    :key="subject"
+                                    @click="handleSubjectSelection(subject)"
+                                    class="cursor-pointer bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg p-2.5 mr-2 mb-2"
+                                    :class="{ 'bg-blue-500 text-white': form.subjects.includes(subject) }"
+                                >
+                                    {{ subject }}
+                                </div>
+                            </div>
+                        </div>
 
                         <button type="submit"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register

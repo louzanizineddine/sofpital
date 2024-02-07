@@ -2,7 +2,7 @@ from flask import request, Blueprint, jsonify, abort
 from src.models.learner_model import Learner
 from src.utils import all, get_by_id, to_dict, add, update, token_required
 from src.models.user_model import User
-from src.models.post_model import Post
+from src.models.post_model import Post, Tag, PostTag
 from src.models.offer_model import Offer
 
 # learner controller blueprint to be registered with api blueprint
@@ -50,9 +50,27 @@ def creaet_new_post(current_user, learner_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
     data = request.get_json()
-    print(data)
+    tags = data.get('tags', [])
+
+    # Remove tags from the data so that it doesn't interfere with Post creation
+    data.pop('tags', None)
+
+    # Create the post
     post = Post(**data)
     add(post)
+    # Associate tags with the post
+    for tag_data in tags:
+        tag = Tag.query.filter_by(name=tag_data['name']).first()
+        if not tag:
+            tag = Tag(**tag_data)
+            add(tag)
+        post_tags = PostTag.query.filter_by(post_id=post.id, tag_id=tag.id).first()
+        if not post_tags:
+            post_tags = PostTag(post_id=post.id, tag_id=tag.id)
+            add(post_tags)
+        # post.tags.append(tag)
+    print(data)
+    
     return jsonify({"status": "success"}), 200
 
 
