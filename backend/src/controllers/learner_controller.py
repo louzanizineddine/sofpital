@@ -85,6 +85,22 @@ def get_one_post_by_id(current_user, learner_id, post_id):
         return jsonify({"error": "Post not found"}), 404
     return jsonify(to_dict(post))
 
+@learner.route('/<learner_id>/posts/received_offers', methods = ["GET"])
+@token_required
+def get_all_recieved_offers(current_user, learner_id):
+    """Get all offers for all posts."""
+    """select * from offer where post_id in (select id from post where learner_id = learner_id)"""
+    learner = Learner.query.get(learner_id)
+    if not learner:
+        return jsonify({"error": "Learner not found"}), 404
+    list_offers = []
+    for post in learner.posts:
+        post_dict = post.to_dict()
+        post_dict['offers'] = [offer.to_dict() for offer in post.offers]
+        list_offers.append(post_dict)
+    
+    return jsonify(list_offers)
+
 
 @learner.route('/<learner_id>/posts/<post_id>/revieved_offers', methods = ["GET"])
 @token_required
