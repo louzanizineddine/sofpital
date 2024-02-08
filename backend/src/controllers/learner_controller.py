@@ -95,9 +95,10 @@ def get_all_recieved_offers(current_user, learner_id):
         return jsonify({"error": "Learner not found"}), 404
     list_offers = []
     for post in learner.posts:
-        post_dict = post.to_dict()
-        post_dict['offers'] = [offer.to_dict() for offer in post.offers]
-        list_offers.append(post_dict)
+        if post.offers:
+            post_dict = post.to_dict()
+            post_dict['offers'] = [offer.to_dict() for offer in post.offers]
+            list_offers.append(post_dict)
     
     return jsonify(list_offers)
 
