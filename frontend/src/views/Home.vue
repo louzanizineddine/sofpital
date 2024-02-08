@@ -1,12 +1,9 @@
 <script setup>
-    // import Login from './Login.vue'; // Remove this line since 'Login' is not used
-    import { RouterView, useRouter } from 'vue-router';
+import { useUserStore } from '../stores/user';
+import { onBeforeMount, ref } from 'vue';
+import { RouterView, useRouter } from 'vue-router';
 
-    import { useUserStore } from '../stores/user'
-
-    const userState = useUserStore()
-    const router = useRouter();
-    
+const router = useRouter();
 </script>
 <template>
     <nav class="bg-white border-gray-200 dark:bg-gray-900">

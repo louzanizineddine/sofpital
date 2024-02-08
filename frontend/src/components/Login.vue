@@ -24,7 +24,7 @@ const HandleLogin = async () => {
 
     if (response.status === 'success') {
         userState.login(response.token);
-        router.push({ name: 'Space' });
+        router.push({ name: 'Dashboard' });
     }
 };
 </script>
