@@ -6,7 +6,10 @@ import Logout from '../components/Logout.vue'
 import Profile from '../components/Profile.vue'
 import Dashboard from '../components/Dashboard.vue'
 import Home from '../views/Home.vue'
-
+import PostInput from '../components/PostInput.vue'
+import LearnerOffers from '../components/LearnerOffers.vue'
+import LearnerPosts from '../components/LearnerPosts.vue'
+import LearnerMeetings from '../components/LearnerMeetings.vue'
 const routes = [
     {
         path: '/',
@@ -43,7 +46,31 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    }
+    },
+    {
+        path: '/learner_offers',
+        name: 'LearnOffers',
+        component: LearnerOffers,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/learner_posts',
+        name: 'LearnerPosts',
+        component: LearnerPosts,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/learner_meetings',
+        name: 'LearnerMeetings',
+        component: LearnerMeetings,
+        meta: {
+            requiresAuth: true
+        }
+    },
 ]
 
 const router = createRouter({

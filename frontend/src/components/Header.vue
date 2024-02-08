@@ -12,10 +12,26 @@ const HandleLogout = () => {
 
 <template>
     <div class="navbar bg-base-100">
-        <div class="flex-1">
-           <router-link to="/dashboard" class="text-lg font-bold text-primary">Sofpital</router-link>
+        <div class="w-2/4">
+            <router-link to="/dashboard" class="text-5xl font-bold text-primary">Sofpital</router-link>
         </div>
         <div class="flex-none gap-2">
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
+                    <li>
+                        <router-link to="/dashboard">Dashboard</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/learner_posts">posts</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/learner_offers">offers</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/learner_meetings">meetings</router-link>
+                    </li>
+                </ul>
+            </div>
             <div class="form-control">
                 <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
             </div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="root">
+  <div id="root" class="container mx-auto">
     <RouterView />
   </div>
 </template>

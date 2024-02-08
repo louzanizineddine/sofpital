@@ -8,9 +8,9 @@
         </template>
 
         <template v-else>
-            <div class="flex flex-row justify-evenly">
+            <h1 class="text-4xl font-bold mt-6">Dashboard</h1>
+            <div class="flex flex-row justify-center mb-8">
                 <PostInput />
-                <UpcomingMeetings />
             </div>
         </template>
     </div>
@@ -19,8 +19,8 @@
 <script setup>
 import { useUserStore } from '../stores/user';
 import { onMounted, ref } from 'vue';
+import { RouterView } from 'vue-router';
 import PostInput from './PostInput.vue';
-import UpcomingMeetings from './UpcomingMeetings.vue';
 import Header from './Header.vue';
 import RecommendedPosts from './Tutor/RecommendedPosts.vue';
 import SentOffers from './Tutor/SentOffers.vue';
