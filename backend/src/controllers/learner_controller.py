@@ -129,16 +129,18 @@ def accept_offer(current_user, learner_id, post_id, offer_id):
     if not post:
         return jsonify({"error": "Post not found"}), 404
     post.status = "accepted"
-    offer = Offer.query.get(offer_id)
-    if not offer:
-        return jsonify({"error": "Offer not found"}), 404
-    offer.status = "accepted"
-    for offer in post.offers:
-        if offer.id != offer_id:
-            offer.status = "rejected"
-            update(offer)
     update(post)
-    update(offer)
+    accepted_offer = Offer.query.get(offer_id)
+    if not accepted_offer:
+        return jsonify({"error": "Offer not found"}), 404
+    accepted_offer.status = "accepted"
+    update(accepted_offer)
+    for other_offer in post.offers:
+        if other_offer.status == "pending":
+            other_offer.status = "rejected"
+            update(other_offer)
+    
+    
     return jsonify({"message": "success"}), 200
 
 
