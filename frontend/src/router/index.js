@@ -10,6 +10,9 @@ import PostInput from '../components/PostInput.vue'
 import LearnerOffers from '../components/LearnerOffers.vue'
 import LearnerPosts from '../components/LearnerPosts.vue'
 import LearnerMeetings from '../components/LearnerMeetings.vue'
+import OffersForOnePost from '../components/OffersForOnePost.vue'
+
+
 const routes = [
     {
         path: '/',
@@ -60,6 +63,14 @@ const routes = [
         name: 'LearnerPosts',
         component: LearnerPosts,
         meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path:'/learner_posts/post/:id/recieved_offers',
+        name: 'OffersForOnePost',
+        component: OffersForOnePost,
+        meta :{
             requiresAuth: true
         }
     },

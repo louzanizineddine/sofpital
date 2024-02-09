@@ -103,7 +103,7 @@ def get_all_recieved_offers(current_user, learner_id):
     return jsonify(list_offers)
 
 
-@learner.route('/<learner_id>/posts/<post_id>/revieved_offers', methods = ["GET"])
+@learner.route('/<learner_id>/posts/<post_id>/recieved_offers', methods = ["GET"])
 @token_required
 def get_recieved_offers(current_user, learner_id, post_id):
     """Get all offers for a post."""
@@ -114,6 +114,8 @@ def get_recieved_offers(current_user, learner_id, post_id):
     list_offers = []
     for offer in post.offers:
         list_offers.append(to_dict(offer))
+    
+    print(list_offers)
     return jsonify(list_offers)
 
 @learner.route('/<learner_id>/posts/<post_id>/accept_offer/<offer_id>', methods = ["PUT"])
@@ -137,7 +139,7 @@ def accept_offer(current_user, learner_id, post_id, offer_id):
             update(offer)
     update(post)
     update(offer)
-    return jsonify(to_dict(post)), 200
+    return jsonify({"message": "success"}), 200
 
 
 @learner.route('/<learner_id>/posts/<post_id>/reject_offer/<offer_id>', methods = ["PUT"])
@@ -150,7 +152,7 @@ def reject_offer(current_user, learner_id, post_id, offer_id):
         return jsonify({"error": "Offer not found"}), 404
     offer.status = "rejected"
     update(offer)
-    return jsonify(to_dict(offer)), 200
+    return jsonify({"message": "success"}), 200
 
 
 @learner.route('/')
