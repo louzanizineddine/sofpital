@@ -1,12 +1,13 @@
 <template>
-  <div id="root" class="mx-auto">
-    <RouterView />
+  <div id="root">
+    <div :class="{ 'container': shouldRenderContainer, 'mx-auto': shouldRenderContainer }">
+      <RouterView />
+    </div>
   </div>
 </template>
-
 <script setup>
 import { useUserStore } from './stores/user';
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -39,5 +40,11 @@ router.beforeEach(async (to, from, next) => {
   }
   // Continue to the next route
   next();
+});
+
+const shouldRenderContainer = computed(() => {
+  // Check if the current route is not "Home", "Register", or "Login"
+  const currentRouteName = router.currentRoute.value.name;
+  return !['Home', 'Register', 'Login'].includes(currentRouteName);
 });
 </script>

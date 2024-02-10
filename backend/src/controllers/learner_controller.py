@@ -1,6 +1,6 @@
 from flask import request, Blueprint, jsonify, abort
 from src.models.learner_model import Learner
-from src.utils import all, get_by_id, to_dict, add, update, token_required
+from src.utils import all, get_by_id, to_dict, add, update, token_required, pagination
 from src.models.user_model import User
 from src.models.post_model import Post, Tag, PostTag
 from src.models.offer_model import Offer
@@ -9,7 +9,7 @@ from src.models.offer_model import Offer
 learner = Blueprint("learner", __name__)
 
 
-@learner.route('/<learner_id>', methods = ["GET"])
+@learner.route('/<learner_id>', methods=["GET"])
 @token_required
 def get_learner(current_user, learner_id):
     """Get the learner's profile information."""
@@ -38,7 +38,8 @@ def get_posts_for_learner(current_user, learner_id):
         return jsonify({"error": "Learner not found"}), 404
 
     # Paginate the query
-    posts = Post.query.filter_by(learner_id=learner_id).paginate(page=page, per_page=per_page)
+    posts = Post.query.filter_by(learner_id=learner_id).paginate(
+        page=page, per_page=per_page)
 
     # Convert paginated results to a list of dictionaries
     list_posts = [to_dict(post) for post in posts.items]
@@ -50,8 +51,7 @@ def get_posts_for_learner(current_user, learner_id):
     })
 
 
-
-@learner.route('/<learner_id>/posts', methods = ["POST"])
+@learner.route('/<learner_id>/posts', methods=["POST"])
 @token_required
 def creaet_new_post(current_user, learner_id):
     """Ask a question."""
@@ -76,18 +76,18 @@ def creaet_new_post(current_user, learner_id):
         if not tag:
             tag = Tag(**tag_data)
             add(tag)
-        post_tags = PostTag.query.filter_by(post_id=post.id, tag_id=tag.id).first()
+        post_tags = PostTag.query.filter_by(
+            post_id=post.id, tag_id=tag.id).first()
         if not post_tags:
             post_tags = PostTag(post_id=post.id, tag_id=tag.id)
             add(post_tags)
         # post.tags.append(tag)
     print(data)
-    
+
     return jsonify({"status": "success"}), 200
 
 
-
-@learner.route('/<learner_id>/posts/<post_id>', methods = ["GET"])
+@learner.route('/<learner_id>/posts/<post_id>', methods=["GET"])
 @token_required
 def get_one_post_by_id(current_user, learner_id, post_id):
     """Get a question by its id."""
@@ -97,11 +97,14 @@ def get_one_post_by_id(current_user, learner_id, post_id):
         return jsonify({"error": "Post not found"}), 404
     return jsonify(to_dict(post))
 
-@learner.route('/<learner_id>/posts/received_offers', methods = ["GET"])
+
+@learner.route('/<learner_id>/posts/received_offers', methods=["GET"])
 @token_required
 def get_all_recieved_offers(current_user, learner_id):
     """Get all offers for all posts."""
     """select * from offer where post_id in (select id from post where learner_id = learner_id)"""
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 8, type=int)
     learner = Learner.query.get(learner_id)
     if not learner:
         return jsonify({"error": "Learner not found"}), 404
@@ -111,11 +114,11 @@ def get_all_recieved_offers(current_user, learner_id):
             post_dict = post.to_dict()
             post_dict['offers'] = [offer.to_dict() for offer in post.offers]
             list_offers.append(post_dict)
-    
-    return jsonify(list_offers)
+    res = pagination(list_offers, page, per_page)
+    return jsonify({"results": res, "total_results": len(list_offers), "total_pages": len(list_offers)//per_page})
 
 
-@learner.route('/<learner_id>/posts/<post_id>/recieved_offers', methods = ["GET"])
+@learner.route('/<learner_id>/posts/<post_id>/recieved_offers', methods=["GET"])
 @token_required
 def get_recieved_offers(current_user, learner_id, post_id):
     """Get all offers for a post."""
@@ -126,11 +129,12 @@ def get_recieved_offers(current_user, learner_id, post_id):
     list_offers = []
     for offer in post.offers:
         list_offers.append(to_dict(offer))
-    
+
     print(list_offers)
     return jsonify(list_offers)
 
-@learner.route('/<learner_id>/posts/<post_id>/accept_offer/<offer_id>', methods = ["PUT"])
+
+@learner.route('/<learner_id>/posts/<post_id>/accept_offer/<offer_id>', methods=["PUT"])
 @token_required
 def accept_offer(current_user, learner_id, post_id, offer_id):
     """Accept an offer for a post."""
@@ -151,12 +155,11 @@ def accept_offer(current_user, learner_id, post_id, offer_id):
         if other_offer.status == "pending":
             other_offer.status = "rejected"
             update(other_offer)
-    
-    
+
     return jsonify({"message": "success"}), 200
 
 
-@learner.route('/<learner_id>/posts/<post_id>/reject_offer/<offer_id>', methods = ["PUT"])
+@learner.route('/<learner_id>/posts/<post_id>/reject_offer/<offer_id>', methods=["PUT"])
 @token_required
 def reject_offer(current_user, learner_id, post_id, offer_id):
     """Reject an offer for a post."""
