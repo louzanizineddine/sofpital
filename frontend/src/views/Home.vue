@@ -938,7 +938,7 @@ const router = useRouter();
 
 <style scoped>
 .gradient {
-    background: linear-gradient(90deg, #1956b5  10%, #daae51 105%);
+    background: linear-gradient(90deg, #daae51 10%, #1956b5 87%);
 }
 </style>
 
