@@ -136,7 +136,7 @@
                             </label>
                             <div class="flex flex-wrap">
                                 <div
-                                    v-for="subject in ['Linux', 'Science', 'English', 'History', 'Programming']"
+                                    v-for="subject in ['Linux', 'Java', 'Python', 'Windows', 'Programming']"
                                     :key="subject"
                                     @click="handleSubjectSelection(subject)"
                                     class="cursor-pointer bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-lg p-2.5 mr-2 mb-2"
