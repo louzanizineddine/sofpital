@@ -11,7 +11,7 @@ const HandleLogout = () => {
 </script>
 
 <template>
-    <div class="navbar bg-base-100">
+    <div class="navbar bg-base-100 shadow">
         <div class="w-2/4">
             <router-link to="/dashboard" class="text-5xl font-bold text-primary">Sofpital</router-link>
         </div>
@@ -31,9 +31,6 @@ const HandleLogout = () => {
                         <router-link to="/learner_meetings">meetings</router-link>
                     </li>
                 </ul>
-            </div>
-            <div class="form-control">
-                <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
             </div>
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
