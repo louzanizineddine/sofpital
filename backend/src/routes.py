@@ -23,8 +23,17 @@ api.register_blueprint(learner, url_prefix="/learner")
 api.register_blueprint(tutor, url_prefix="/tutor")
 api.register_blueprint(meeting, url_prefix="/meeting")
 
-@api.route('/search/<query>', methods = ["GET"])
-def search(query):
+
+@api.route('/search/posts', methods = ["GET"])
+def search_posts(query):
+    query = request.args.get('query')
+    # search for description and title
+    posts = all(Post)
+    matched_posts = [post for post in posts if query.lower() in post.title.lower() or query.lower() in post.description.lower()]
+    return jsonify(matched_posts)
+
+@api.route('/search/', methods = ["GET"])
+def search():
     # Perform the search logic here
     models = {
         "users": all(User),
@@ -34,7 +43,7 @@ def search(query):
         "posts": all(Post),
         "offers": all(Offer)
     }
-
+    query = request.args.get('query')
     page = request.args.get('page', default=1, type=int)
     per_page = request.args.get('per_page', default=10, type=int)
 

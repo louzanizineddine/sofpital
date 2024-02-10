@@ -1,6 +1,6 @@
 <template>
     <Header />
-
+    <Search />
     <h1 class="text-4xl font-bold mt-6">Posts</h1>
     <div class="flex flex-row flex-wrap justify-center">
         <!-- Show skeleton loading animation when loading is true -->
@@ -38,7 +38,7 @@
 import { useUserStore } from '../stores/user';
 import { onMounted, ref, watch, computed } from 'vue';
 import Header from './Header.vue';
-
+import Search from './Search.vue';
 const store = useUserStore();
 const posts = ref([]);
 const currentPage = ref(1);
