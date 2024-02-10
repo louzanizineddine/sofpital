@@ -26,18 +26,30 @@ def get_learner(current_user, learner_id):
     return jsonify(to_dict(user))
 
 
-@learner.route('/<learner_id>/posts', methods = ["GET"])
+@learner.route('/<learner_id>/posts', methods=["GET"])
 @token_required
 def get_posts_for_learner(current_user, learner_id):
-    """Get all questions asked by the learner."""
-    """select * from post where learner_id = learner_id"""
-    list_posts = []
+    """Get paginated list of questions asked by the learner."""
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 8, type=int)
+
     learner = Learner.query.get(learner_id)
     if not learner:
         return jsonify({"error": "Learner not found"}), 404
-    for post in learner.posts:
-        list_posts.append(to_dict(post))
-    return jsonify(list_posts)
+
+    # Paginate the query
+    posts = Post.query.filter_by(learner_id=learner_id).paginate(page=page, per_page=per_page)
+
+    # Convert paginated results to a list of dictionaries
+    list_posts = [to_dict(post) for post in posts.items]
+
+    return jsonify({
+        "posts": list_posts,
+        "total_pages": posts.pages,
+        "total_posts": posts.total
+    })
+
+
 
 @learner.route('/<learner_id>/posts', methods = ["POST"])
 @token_required
