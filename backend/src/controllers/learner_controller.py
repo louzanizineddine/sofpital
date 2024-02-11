@@ -118,21 +118,22 @@ def get_all_recieved_offers(current_user, learner_id):
     return jsonify({"results": res, "total_results": len(list_offers), "total_pages": len(list_offers)//per_page})
 
 
-@learner.route('/<learner_id>/posts/<post_id>/recieved_offers', methods=["GET"])
+
+@learner.route('/<learner_id>/offers/accepted_offers', methods=["GET"])
 @token_required
-def get_recieved_offers(current_user, learner_id, post_id):
-    """Get all offers for a post."""
-    """select * from offer where post_id = post_id"""
-    post = Post.query.get(post_id)
-    if not post:
-        return jsonify({"error": "Post not found"}), 404
+def get_accepted_offers(current_user, learner_id):
+    """Get all accepted offers for all posts."""
+    """select * from offer where post_id in (select id from post where learner_id = learner_id) and status = 'accepted'"""
+    learner = Learner.query.get(learner_id)
+    if not learner:
+        return jsonify({"error": "Learner not found"}), 404
     list_offers = []
-    for offer in post.offers:
-        list_offers.append(to_dict(offer))
-
-    print(list_offers)
+    for post in learner.posts:
+        for offer in post.offers:
+            if offer.status == "accepted":
+                list_offers.append(offer.to_dict())
+    
     return jsonify(list_offers)
-
 
 @learner.route('/<learner_id>/posts/<post_id>/accept_offer/<offer_id>', methods=["PUT"])
 @token_required
