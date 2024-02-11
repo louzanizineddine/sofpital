@@ -1,5 +1,5 @@
-<!-- YourMainComponent.vue -->
 <template>
+    <Header />
     <div class="mt-8 dark:text-white">
       <h1 class="text-2xl font-bold text-white-900">Recommended Posts</h1>
       <ul role="list" class="divide-y divide-gray-100">
@@ -11,6 +11,7 @@
   </template>
   
   <script setup>
+  import Header from '../Header.vue';
   import { onMounted } from 'vue';
   import { useUserStore } from '../../stores/user';
   import PostItem from './PostItem.vue';

@@ -3,8 +3,7 @@
         <Header />
 
         <template v-if="whatToLoad === 'tutor'">
-            <RecommendedPosts />
-            <SentOffers />
+            <p>here is the dashboard </p>
         </template>
 
         <template v-else>
@@ -22,9 +21,6 @@ import { onMounted, ref } from 'vue';
 import { RouterView } from 'vue-router';
 import PostInput from './PostInput.vue';
 import Header from './Header.vue';
-import RecommendedPosts from './Tutor/RecommendedPosts.vue';
-import SentOffers from './Tutor/SentOffers.vue';
-
 console.log(`rendering dashboard`)
 
 const store = useUserStore();

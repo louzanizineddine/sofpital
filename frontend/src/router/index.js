@@ -12,6 +12,11 @@ import LearnerPosts from '../components/LearnerPosts.vue'
 import LearnerMeetings from '../components/LearnerMeetings.vue'
 import OffersForOnePost from '../components/OffersForOnePost.vue'
 
+import TutorOffers from '../components/Tutor/TutorOffers.vue'
+import TutorMeetings from '../components/Tutor/TutorMeetings.vue'
+import TutorRecommendations from '../components/Tutor/TutorRecommendations.vue'
+import PasswordReset from '../components/PasswordReset.vue'
+
 
 const routes = [
     {
@@ -28,6 +33,19 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register,
+    },
+    {
+        path: '/reset_password',
+        name: 'PasswordReset',
+        component: PasswordReset,
+    },
+    {
+        path: '/post_input',
+        name: 'PostInput',
+        component: PostInput,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/logout',
@@ -82,6 +100,31 @@ const routes = [
             requiresAuth: true
         }
     },
+    {
+        path: '/tutor_recommendations',
+        name: 'TutorRecommendations',
+        component: TutorRecommendations,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/tutor_offers',
+        name: 'TutorOffers',
+        component: TutorOffers,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/tutor_meetings',
+        name: 'TutorMeetings',
+        component: TutorMeetings,
+        meta: {
+            requiresAuth: true
+        }
+    }
+
 ]
 
 const router = createRouter({

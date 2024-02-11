@@ -1,38 +1,40 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../stores/user'
-import {toast} from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-
-const userState = useUserStore()
 const router = useRouter();
 const form = ref({
     email: '',
-    password: '',
 });
 
-const HandleLogin = async () => {
-    const data = await fetch('http://localhost:8000/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form.value),
-    });
-    const response = await data.json();
-    console.log(response);
+const handlePasswordReset = async () => {
+    try {
+        const response = await fetch('http://localhost:8000/api/auth/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: form.value.email }),
+        });
+        const data = await response.json();
 
-    if (response.status === 'success') {
-        userState.login(response.token);
-        router.push({ name: 'Dashboard' });
-    }
-    else { // case of authentication failure
-        toast('Invalid email or password', { type: 'error', timeout: 300 });
+        if (response.status === "success") {
+            // Password reset initiated successfully
+            toast('Password reset instructions sent to your email.', { type: 'success', timeout: 3000 });
+            // router.push({ name: 'Login' }); // Redirect user to login page
+        } else {
+            // Password reset failed
+            toast(data.message || 'Password reset failed.', { type: 'error', timeout: 3000 });
+        }
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        toast('An error occurred while resetting your password SMTP SERVER NOT YER CONFIGURED DUDE.', { type: 'error', timeout: 3000 });
     }
 };
 </script>
+
 
 <template>
     <section class="bg-gray-50 dark:bg-gray-900 gradient">
@@ -81,15 +83,14 @@ const HandleLogin = async () => {
       </div>
       <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
     </nav>
-    
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div
                 class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Sign in to your account
+                        Reset Your  password
                     </h1>
-                    <form class="space-y-4 md:space-y-6" @submit.prevent="HandleLogin">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="handlePasswordReset">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
                                 email</label>
@@ -97,18 +98,9 @@ const HandleLogin = async () => {
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="name@company.com" required="">
                         </div>
-                        <div>
-                            <label for="password"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" v-model="form.password" id="password"
-                                placeholder="••••••••"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required="">
-                        </div>
                         <button type="submit"
-                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
-                            in</button>
-                            <router-link :to="{name: 'PasswordReset'}">Forget password ?</router-link>
+                            class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Reset</button>
+
                     </form>
                 </div>
             </div>

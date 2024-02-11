@@ -36,16 +36,28 @@ const HandleLogout = () => {
                         <router-link to="/dashboard">Dashboard</router-link>
                     </li>
                     <li>
-                        
-                        <router-link to="/learner_posts">posts</router-link>
+                        <template v-if="userState.user.role === 'learner'">
+                            <router-link to="/learner_posts">posts</router-link>
+                        </template>
+                        <template v-else>
+                            <router-link to="/tutor_recommendations">recommendations</router-link>
+                        </template>
                     </li>
                     <li>
-                        
-                        <router-link to="/learner_offers">offers</router-link>
+                        <template v-if="userState.user.role === 'learner'">
+                            <router-link to="/learner_offers">offers</router-link>
+                        </template>
+                        <template v-else>
+                            <router-link to="/tutor_offers">offers</router-link>
+                        </template>
                     </li>
                     <li>
-                        
-                        <router-link to="/learner_meetings">meetings</router-link>
+                        <template v-if="userState.user.role === 'learner'">
+                            <router-link to="/learner_meetings">meetings</router-link>
+                        </template>
+                        <template v-else>
+                            <router-link to="/tutor_meetings">meetings</router-link>
+                        </template>
                     </li>
                 </ul>
             </div>
