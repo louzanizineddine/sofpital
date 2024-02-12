@@ -43,6 +43,19 @@ def get_meetings_for_learner(current_user, learner_id):
     res = pagination(list_meetings, page, per_page)
     return jsonify({"meetings": res, "total_results": len(list_meetings), "total_pages": len(list_meetings)//per_page})
 
+@meeting.route('/learner/<learner_id>/accepted_offers', methods = ["GET"])
+@token_required
+def get_accepted_meetings_for_learner(current_user, learner_id):
+    """get all accepted meetings for a learner"""
+    learner = Learner.query.get(learner_id)
+    if not learner:
+        return jsonify({"error": "Learner not found"}), 404
+    list_offers = []
+    for offer in learner.offers:
+        if offer.status == "accepted" and not offer.meeting:
+            list_offers.append(to_dict(offer))
+    return jsonify(list_offers)
+
 @meeting.route('/tutor/<tutor_id>', methods = ["GET"])
 @token_required
 def get_meetings_for_tutor(current_user, tutor_id):
