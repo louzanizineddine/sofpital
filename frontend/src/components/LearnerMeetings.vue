@@ -4,25 +4,45 @@
         <Search />
         <h1 class="text-4xl font-bold mt-6">Meetings</h1>
         <div class="flex flex-row flex-wrap justify-center">
-            <div v-if="loading" class="card w-96 bg-blue-500 text-primary-content m-4">
-                <div class="card-body">
-                    <div class="skeleton w-full h-8 mb-4"></div>
-                    <div class="skeleton w-full h-6 mb-4"></div>
-                    <div class="skeleton w-full h-6"></div>
+            <div v-if="loading" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+                <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                        <div class="skeleton h-48 w-full object-cover md:w-48"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="skeleton w-32 h-4 mb-6"></div>
+                        <div class="skeleton w-48 h-4 mb-6"></div>
+                        <div class="skeleton w-32 h-4 mb-2"></div>
+                        <div class="skeleton w-48 h-4 mb-2"></div>
+                        <div class="skeleton w-24 h-4 mb-2"></div>
+                        <div class="skeleton w-32 h-12 mt-4"></div>
+                    </div>
                 </div>
             </div>
             <div v-else-if="meetings.length === 0" class="text-center text-gray-500 mt-4">
                 No meetings for now.
             </div>
-            <div v-else v-for="meet in meetings" :key="meet.id" class="card w-96 bg-blue-600 text-primary-content m-4">
-                <div class="card-body">
-                    <!-- <h2 class="card-title">{{ post.title }}</h2>
-            <p>{{ post.description }}</p>
-            <p> posted on {{ post.poste_date }}</p> -->
-                    {{ meet }}
+            <div v-else v-for="meet in meetings" :key="meet.id"
+                class="max-w-md mx-auto bg-blue-700 text-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-8">
+                <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                        <img class="h-full w-full object-cover md:w-48" src="https://picsum.photos/2010"
+                            alt="Doctor's image">
+                    </div>
+                    <div class="p-8">
+                        <div class="uppercase tracking-wide text-sm font-semibold">{{ meet.tutor.user.first_name }} {{
+                            meet.tutor.user.last_name }}</div>
+                        <p class="block mt-1 text-lg leading-tight font-medium">About post: {{ meet.post.title }}</p>
+                        <p class="mt-2">Duration: {{ meet.duration }} minutes</p>
+                        <p class="">Meeting date due to: {{ formatDate(meet.date) }}</p>
+                        <button class="btn mt-3">
+                            mark as completed
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <!-- Pagination controls -->
         <div class="flex flex-row justify-center">
             <div class="pagination">
@@ -31,52 +51,63 @@
             </div>
         </div>
 
-
         <div>
             <h1 class="text-4xl font-bold mt-6">Set up a new Meeting Now</h1>
             <div class="flex flex-row flex-wrap justify-center">
-                <div v-if="loading" class="card w-96 bg-blue-500 text-primary-content m-4">
-                    <div class="card-body">
-                        <div class="skeleton w-full h-8 mb-4"></div>
-                        <div class="skeleton w-full h-6 mb-4"></div>
-                        <div class="skeleton w-full h-6"></div>
+                <div v-if="loading" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
+                    <div class="md:flex">
+                        <div class="md:flex-shrink-0">
+                            <div class="skeleton h-48 w-full object-cover md:w-48"></div>
+                        </div>
+                        <div class="p-8">
+                            <div class="skeleton w-32 h-4 mb-6"></div>
+                            <div class="skeleton w-48 h-4 mb-6"></div>
+                            <div class="skeleton w-32 h-4 mb-2"></div>
+                            <div class="skeleton w-48 h-4 mb-2"></div>
+                            <div class="skeleton w-24 h-4 mb-2"></div>
+                            <div class="skeleton w-32 h-12 mt-4"></div>
+                        </div>
                     </div>
                 </div>
                 <div v-else-if="accepted_offers.length === 0" class="text-center text-gray-500 mt-4">
                     No accepted_offers for now.
                 </div>
                 <div v-else v-for="offer in accepted_offers" :key="offer.id"
-                    class="card w-96 bg-blue-600 text-primary-content m-4">
-                    <div class="card-body">
-                        <h2 class="card-title">{{ offer.title }}</h2>
-                        <p>{{ offer.description }}</p>
-                        <p> posted on {{ offer.offer_date }}</p>
-                        <p>Offer by Tutor {{ offer.tutor_id }}</p>
-                        <!-- Open the modal using ID.showModal() method -->
-                        <button class="btn" @click="showModal(offer.id)">Set up a Meeing</button>
-                        <dialog :id="`modal_${offer.id}`" class="modal text-black">
-                            <div class="modal-box">
-                                <h3 class="text-2xl">Insert The meeting information</h3>
-                                <!-- <div class="modal-action"> -->
-                                <form method="dialog">
-                                    <label for="meeting_date" class="label mt-3">Meeting Date</label>
-                                    <input type="datetime-local" v-model="meetingForm.date"
-                                        class="input input-bordered w-full max-w-xs" />
-
-                                    <label for="meeting_location" class="label mt-3">Meeting Duration in Minutes</label>
-                                    <input type="number" min="15" max="120" v-model="meetingForm.duration"
-                                        placeholder="Meeting Duration" class="input input-bordered w-full max-w-xs" />
-                                    <br>
-                                    <button @click.prevent="() => submitNewMeeting(offer.id, offer.tutor_id, offer.post_id)"
-                                        class="btn mt-4 mr-3 bg-blue-600 text-white">Submit</button>
-                                    <button class="btn">Close</button>
-                                </form>
-                                <!-- </div> -->
-                            </div>
-                        </dialog>
+                    class="max-w-md mx-auto bg-blue-700 text-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mt-8">
+                    <div class="md:flex">
+                        <div class="md:flex-shrink-0">
+                            <img class="h-full w-full object-cover md:w-48" src="https://picsum.photos/2010"
+                                alt="Doctor's image">
+                        </div>
+                        <div class="p-8">
+                            <div class="uppercase tracking-wide text-sm font-semibold">{{ offer.title }}</div>
+                            <p class="block mt-1 text-lg leading-tight font-medium text-black">{{ offer.description }}</p>
+                            <p class="mt-2">Posted on: {{ formatDate(offer.offer_date) }}</p>
+                            <p class="">Offer by Tutor: {{ offer.tutor.user.first_name }} {{ offer.tutor.user.last_name }}</p>
+                            <button class="btn mt-3" @click="showModal(offer.id)">Set up a Meeting</button>
+                            <dialog :id="`modal_${offer.id}`" class="modal text-black">
+                                <div class="modal-box">
+                                    <h3 class="text-2xl">Insert The meeting information</h3>
+                                    <form method="dialog">
+                                        <label for="meeting_date" class="label mt-3">Meeting Date</label>
+                                        <input type="datetime-local" v-model="meetingForm.date"
+                                            class="input input-bordered w-full max-w-xs" />
+                                        <label for="meeting_location" class="label mt-3">Meeting Duration in Minutes</label>
+                                        <input type="number" min="15" max="120" v-model="meetingForm.duration"
+                                            placeholder="Meeting Duration" class="input input-bordered w-full max-w-xs" />
+                                        <br>
+                                        <button
+                                            @click.prevent="() => submitNewMeeting(offer.id, offer.tutor_id, offer.post_id)"
+                                            class="btn mt-4 mr-3 bg-blue-600 text-white">Submit</button>
+                                        <button class="btn">Close</button>
+                                    </form>
+                                </div>
+                            </dialog>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <!-- Pagination controls -->
             <!-- <div class="flex flex-row justify-center">
         <div class="pagination">
@@ -99,8 +130,9 @@ import { useUserStore } from '../stores/user';
 import { onMounted, ref, computed } from 'vue';
 import Header from './Header.vue';
 import Search from './Search.vue';
-import {toast} from 'vue3-toastify'
+import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import { getTutorInfo, getPostInfo, formatDate } from '../utils.js'
 
 
 const store = useUserStore();
@@ -166,7 +198,6 @@ const fectchAcceptedOffers = async () => {
     } catch (error) {
         console.error('Error fetching meetings:', error);
     } finally {
-        loading.value = false;
     }
 };
 
@@ -183,18 +214,44 @@ const fetchMeetings = async () => {
             }
         });
         const data = await response.json();
+        console.log(data);
         meetings.value = data.meetings;
         totalPages.value = data.total_pages;
     } catch (error) {
         console.error('Error fetching meetings:', error);
     } finally {
-        loading.value = false;
     }
 };
 
+const fetchDetails = async (meeting) => {
+    const tutor = await getTutorInfo(meeting.tutor_id);
+    if (tutor) {
+        meeting.tutor = tutor;
+    }
+
+    const post = await getPostInfo(meeting.learner_id, meeting.post_id);
+    if (post) {
+        meeting.post = post;
+    }
+}
 onMounted(async () => {
     await fectchAcceptedOffers();
     await fetchMeetings();
+    for (let i = 0; i < meetings.value.length; i++) {
+        await fetchDetails(meetings.value[i]);
+    }
+    console.log(meetings.value);
+
+    for (let i = 0; i < accepted_offers.value.length; i++) {
+
+        const tutor = await getTutorInfo(accepted_offers.value[i].tutor_id);
+        if (tutor) {
+            accepted_offers.value[i].tutor = tutor;
+        }
+    }
+    console.log(accepted_offers.value);
+
+    loading.value = false;
 });
 
 

@@ -4,7 +4,7 @@ from src import db
 from src.models.tutor_model import Tutor, TutorSubject, Subject
 from src.models.offer_model import Offer
 from src.models.post_model import Post, PostTag, Tag
-
+from src.models.user_model import User
 from src.utils import all, get_by_id, to_dict, add, token_required
 
 # tutor controller blueprint to be registered with api blueprint
@@ -18,7 +18,16 @@ def get_tutor(current_user,tutor_id):
     tutor = Tutor.query.get(tutor_id)
     if not tutor:
         return jsonify({"error": "Tutor not found"}), 404
-    return jsonify(to_dict(tutor))
+    
+    user_id = tutor.user_id
+    
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+    return {
+        "tutor": to_dict(tutor),
+        "user": to_dict(user)
+    } 
 
 
 @tutor.route('/<tutor_id>/recommended_posts', methods = ["GET"])

@@ -119,7 +119,7 @@ const router = useRouter();
               </li>
               <li class="mr-3">
                 <a class="inline-block text-black font-bold no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                  href="#Pricing">Pricing</a>
+                  href="#features">Features</a>
               </li>
               <li class="mr-3">
                 <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
@@ -248,7 +248,7 @@ const router = useRouter();
 
         </div>
       </section>
-      <section class="border-b py-8">
+      <section id="features"class="border-b py-8">
         <div class="container mx-auto flex flex-wrap pt-4 pb-12">
           <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white-800">
             Sofpital Features
@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (scrollpos > 10) {
       //   console.log("header:", header);
-      header.classList.add("bg-white");
+      // header.classList.add("bg-white");
       navaction.classList.remove("bg-white");
       navaction.classList.add("gradient");
       navaction.classList.remove("text-gray-800");
@@ -526,8 +526,8 @@ document.addEventListener('DOMContentLoaded', function () {
       navcontent.classList.remove("bg-gray-100");
       navcontent.classList.add("bg-white");
     } else {
-      header.classList.remove("bg-white");
-      navaction.classList.remove("gradient");
+      // header.classList.remove("bg-white");
+      // navaction.classList.remove("gradient");
       navaction.classList.add("bg-white");
       navaction.classList.remove("text-white");
       navaction.classList.add("text-gray-800");

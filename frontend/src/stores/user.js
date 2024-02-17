@@ -1,6 +1,6 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
-import checkToken from '../utils'
+import {checkToken} from '../utils'
 
 export const useUserStore = defineStore('User', {
   state: () => {
