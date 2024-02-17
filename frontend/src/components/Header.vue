@@ -59,6 +59,9 @@ const HandleLogout = () => {
                             <router-link to="/tutor_meetings">meetings</router-link>
                         </template>
                     </li>
+                    <li>
+                        <router-link to="/room">room</router-link>
+                    </li>
                 </ul>
             </div>
             <div class="dropdown dropdown-end">

@@ -12,6 +12,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "agora-rtc-sdk-ng": "^4.20.0",
     "atob": "^2.1.2",
     "axios": "^1.6.7",
     "flowbite": "^2.2.1",

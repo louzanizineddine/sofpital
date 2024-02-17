@@ -11,6 +11,7 @@ import LearnerOffers from '../components/LearnerOffers.vue'
 import LearnerPosts from '../components/LearnerPosts.vue'
 import LearnerMeetings from '../components/LearnerMeetings.vue'
 import OffersForOnePost from '../components/OffersForOnePost.vue'
+import Room from '../components/Room.vue'
 
 import TutorOffers from '../components/Tutor/TutorOffers.vue'
 import TutorMeetings from '../components/Tutor/TutorMeetings.vue'
@@ -123,6 +124,18 @@ const routes = [
         meta: {
             requiresAuth: true
         }
+    },
+    {
+        path: '/room',
+        name: 'Room',
+        component: Room,
+        meta: {
+            requiresAuth: true
+        }
+    }
+    ,{
+        path: '/:pathMatch(.*)*',
+        redirect: { name: 'Home' }
     }
 
 ]
