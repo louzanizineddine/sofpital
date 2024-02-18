@@ -51,8 +51,10 @@ def get_user_profile(current_user):
             learner_dict = to_dict(learner_profile)
             posts = learner_profile.posts
             meetings = learner_profile.meetings
-            learner_dict['posts'] = posts
-            learner_dict['meetings'] = meetings
+            posts_lst = [post.to_dict() for post in posts]
+            meetings_lst = [to_dict(meeting) for meeting in meetings]
+            learner_dict['posts'] = posts_lst
+            learner_dict['meetings'] = meetings_lst
 
             # Merge learner dictionary into user dictionary
             learner_dict.update(user_dict)
@@ -69,8 +71,10 @@ def get_user_profile(current_user):
             tutor_dict = to_dict(tutor_profile)
             offers = tutor_profile.offers
             meetings = tutor_profile.meetings
-            tutor_dict['offers'] = offers
-            tutor_dict['meetings'] = meetings
+            offers_lst = [offer.to_dict() for offer in offers]
+            meetings_lst = [to_dict(meeting) for meeting in meetings]
+            tutor_dict['offers'] = offers_lst
+            tutor_dict['meetings'] = meetings_lst
 
             # Merge tutor dictionary into user dictionary
             tutor_dict.update(user_dict)

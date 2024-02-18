@@ -42,6 +42,8 @@
     </div>
 </template>
 
+
+
 <script setup>
 import { onMounted } from 'vue';
 import { useUserStore } from '../../stores/user';
@@ -67,4 +69,7 @@ onMounted(async () => {
     sentOffers.value = response;
     // console.log(data)
 });
+
+
 </script>
+
