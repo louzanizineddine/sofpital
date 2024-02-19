@@ -3,7 +3,7 @@
         <Header />
 
         <template v-if="whatToLoad === 'tutor'">
-        
+            <!-- {{ router.push({ name: '' }) }} -->
         </template>
 
         <template v-else>
