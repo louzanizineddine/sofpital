@@ -22,6 +22,20 @@ async function getTutorInfo(tutorId){
     return data;
 }
 
+async function getLearnerInfo(learnerId){
+    const response = await fetch(`http://localhost:8000/api/learner/${learnerId}`,
+    {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem('token'),
+        }
+    });
+    const data = await response.json();
+    return data;
+
+}
+
 async function getPostInfo(learnerId,postId){
     const response = await fetch(`http://localhost:8000/api/learner/${learnerId}/posts/${postId}`,
     {
@@ -37,20 +51,21 @@ async function getPostInfo(learnerId,postId){
 
 function formatDate(dateString) {
   // Parse the date string
-  var date = new Date(dateString);
+  let date = new Date(dateString);
   
   // Get day and month
-  var day = date.getDate();
-  var month = date.getMonth() + 1; // Months are zero-indexed
-  
+  let day = date.getDate();
+  let month = date.getMonth() + 1; // Months are zero-indexed
+  let year = date.getFullYear();
   // Pad single digit day and month with leading zero
   day = day < 10 ? '0' + day : day;
   month = month < 10 ? '0' + month : month;
+//   year = year < 10 ? '0' + year : year;
   
   // Return formatted date string in "dd/mm" format
-  return day + '/' + month;
+  return day + '/' + month + '/' + year;
 }
 
 
 
-export { checkToken, getTutorInfo, getPostInfo, formatDate };
+export { checkToken, getTutorInfo, getLearnerInfo ,getPostInfo, formatDate };

@@ -7,7 +7,7 @@
         </video>
     </div>
 </template>
-
+<!--
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -105,4 +105,4 @@ let handleMemberJoined = async (memberId) => {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
 }
-</style>
+</style> -->

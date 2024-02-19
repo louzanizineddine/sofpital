@@ -3,7 +3,7 @@
         <Header />
 
         <template v-if="whatToLoad === 'tutor'">
-            <p>here is the dashboard </p>
+        
         </template>
 
         <template v-else>

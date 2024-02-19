@@ -492,7 +492,7 @@ const router = useRouter();
 
   </html>
 </template>
-
+<!-- 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var scrollpos = window.scrollY;
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return false;
   }
 })
-</script>
+</script> -->
 
 <style scoped>.gradient {
   background: linear-gradient(90deg, #daae51 10%, #1956b5 87%);
