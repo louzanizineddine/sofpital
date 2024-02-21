@@ -47,10 +47,10 @@ http {
         return 301 https://$host$request_uri;
       }
 
-      alias /dist/;
+      alias /app/dist/;
       try_files $uri /index.html;
     }
 
-    root /dist; # path to your app
+    root /app/dist; # path to your app
   }
 }
