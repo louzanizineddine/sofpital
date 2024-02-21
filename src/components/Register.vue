@@ -1,6 +1,7 @@
 <script setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router';
+    import {apiURL} from '../config'
 
     const router = useRouter();
 
@@ -16,7 +17,7 @@
     });
 
     const handleRegister = async () => {
-        const data = await fetch('http://localhost:8000/api/auth/signup', {
+        const data = await fetch(`${apiURL}auth/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

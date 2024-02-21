@@ -133,6 +133,7 @@ import Search from './Search.vue';
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { getTutorInfo, getPostInfo, formatDate } from '../utils.js'
+import {apiURL} from '../config'
 
 
 const store = useUserStore();
@@ -151,7 +152,7 @@ const meetingForm = ref({
 
 
 const submitNewMeeting = async (offerId, tutorId, postId) => {
-    const data = await fetch(`http://localhost:8000/api/meeting/`, {
+    const data = await fetch(`${apiURL}meeting/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -184,7 +185,7 @@ const fectchAcceptedOffers = async () => {
     loading.value = true;
     try {
         const page = currentPage.value;
-        const url = `http://localhost:8000/api/learner/${store.user.learner_id}/offers/accepted_offers`;
+        const url = `${apiURL}learner/${store.user.learner_id}/offers/accepted_offers`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -205,7 +206,7 @@ const fetchMeetings = async () => {
     loading.value = true;
     try {
         const page = currentPage.value;
-        const url = `http://localhost:8000/api/meeting/learner/${store.user.learner_id}?page=${page}&per_page=${perPage}`;
+        const url = `${apiURL}meeting/learner/${store.user.learner_id}?page=${page}&per_page=${perPage}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {

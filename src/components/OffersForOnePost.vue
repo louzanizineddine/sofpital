@@ -48,6 +48,7 @@ import { useUserStore } from '../stores/user';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Header from './Header.vue';
+import {apiURL} from '../config'
 import {toast} from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
@@ -88,7 +89,7 @@ function CardBackground(status){
 
 async function handleAcceptOffer(offerId){
     const { id } = router.currentRoute.value.params;
-    const request = await fetch(`http://localhost:8000/api/learner/${store.user.learner_id}/posts/${id}/accept_offer/${offerId}`,
+    const request = await fetch(`${apiURL}learner/${store.user.learner_id}/posts/${id}/accept_offer/${offerId}`,
         {
             method: 'PUT',
             headers: {
@@ -109,7 +110,7 @@ async function handleAcceptOffer(offerId){
 
 async function handleDeclineOffer(offerId){
     const { id } = router.currentRoute.value.params;
-    const request = await fetch(`http://localhost:8000/api/learner/${store.user.learner_id}/posts/${id}/reject_offer/${offerId}`,
+    const request = await fetch(`${apiURL}learner/${store.user.learner_id}/posts/${id}/reject_offer/${offerId}`,
         {
             method: 'PUT',
             headers: {
@@ -132,7 +133,7 @@ onMounted(async () => {
     const { id } = router.currentRoute.value.params;
     postId.value = id;
 
-    const dataPost = await fetch(`http://localhost:8000/api/learner/${store.user.learner_id}/posts/${id}`, {
+    const dataPost = await fetch(`${apiURL}learner/${store.user.learner_id}/posts/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -148,7 +149,7 @@ onMounted(async () => {
         areButtonsDisabled.value = true;
     }
 
-    const dataOffers = await fetch(`http://localhost:8000/api/learner/${store.user.learner_id}/posts/${id}/recieved_offers`, {
+    const dataOffers = await fetch(`${apiURL}learner/${store.user.learner_id}/posts/${id}/recieved_offers`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

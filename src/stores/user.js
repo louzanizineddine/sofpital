@@ -1,6 +1,8 @@
 // stores/counter.js
 import { defineStore } from 'pinia'
 import {checkToken} from '../utils'
+import {apiURL} from '../config'
+
 
 export const useUserStore = defineStore('User', {
   state: () => {
@@ -29,7 +31,7 @@ export const useUserStore = defineStore('User', {
     },
 
     async fetchUserInfo(user_id) {
-      const data = await fetch(`http://localhost:8000/api/user/${user_id}`, {
+      const data = await fetch(`${apiURL}user/${user_id}`, {
         mathod: 'GET',
         headers: {
           'x-access-token': localStorage.getItem('token'),

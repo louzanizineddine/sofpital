@@ -21,10 +21,12 @@
           <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
             <label for="title" class="label mt-3">Offer title</label>
-            <input type="text" v-model="OfferForm.title" placeholder="Offer title" class="input input-bordered w-full max-w-xs" />
+            <input type="text" v-model="OfferForm.title" placeholder="Offer title"
+              class="input input-bordered w-full max-w-xs" />
 
             <label for="description" class="label mt-3">Offer description</label>
-            <input type="text" v-model="OfferForm.description" placeholder="Offer description" class="input input-bordered w-full max-w-xs" />
+            <input type="text" v-model="OfferForm.description" placeholder="Offer description"
+              class="input input-bordered w-full max-w-xs" />
             <br>
 
             <button @click.prevent="submitOffer" class="btn mt-4 mr-3 bg-blue-600 text-white">Submit</button>
@@ -39,7 +41,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from '../../stores/user';
-import {toast} from 'vue3-toastify'
+import { apiURL } from '../../config'
+
+import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
 const store = useUserStore();
@@ -62,7 +66,7 @@ const OfferForm = ref({
 
 async function submitOffer() {
 
-  const data = await fetch(`http://localhost:8000/api/tutor/${store.user.tutor_id}/offers/post/${props.post.id}`, {
+  const data = await fetch(`${apiURL}tutor/${store.user.tutor_id}/offers/post/${props.post.id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -79,17 +83,17 @@ async function submitOffer() {
   });
 
   const response = await data.json();
-  
+
   if (response.status === 'success') {
     console.log('Offer submitted successfully');
-    toast('Your offer have been added successfully', {type: 'success', timeout: 1500});
+    toast('Your offer have been added successfully', { type: 'success', timeout: 1500 });
     OfferForm.value.title = '';
     OfferForm.value.description = '';
     closeModal();
     store.user.newSentOffer = true
   } else {
     console.log('Offer submission failed');
-    toast('Your offer submission failed', {type: 'error', timeout: 1500});
+    toast('Your offer submission failed', { type: 'error', timeout: 1500 });
   }
 }
 

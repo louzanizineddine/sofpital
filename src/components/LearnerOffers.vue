@@ -46,7 +46,8 @@
   import { onMounted, ref, computed } from 'vue';
   import Header from './Header.vue';
   import Search from './Search.vue';
-  
+  import {apiURL} from '../config'
+
   const store = useUserStore();
   const results = ref([]);
   const currentPage = ref(1);
@@ -58,7 +59,7 @@
     loading.value = true;
     try {
       const page = currentPage.value;
-      const url = `http://localhost:8000/api/learner/${store.user.learner_id}/posts/received_offers?page=${page}&per_page=${perPage}`;
+      const url = `${apiURL}learner/${store.user.learner_id}/posts/received_offers?page=${page}&per_page=${perPage}`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {

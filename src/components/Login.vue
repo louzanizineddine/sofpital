@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '../stores/user'
 import {toast} from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import {apiURL} from '../config'
 
 
 const userState = useUserStore()
@@ -14,7 +15,7 @@ const form = ref({
 });
 
 const HandleLogin = async () => {
-    const data = await fetch('http://localhost:8000/api/auth/login', {
+    const data = await fetch(`${apiURL}auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -42,6 +42,8 @@ import { ref } from 'vue';
 const searchQuery = ref('');
 const postsSearchResults = ref([]);
 const offersSearchResults = ref([]);
+import {apiURL} from '../config'
+
 const loading = ref(false);
 const showDialog = ref(false);
 
@@ -49,7 +51,7 @@ const search = async () => {
     loading.value = true;
     try {
         // Fetch search results from the server
-        const response = await fetch(`http://localhost:8000/api/search?query=${searchQuery.value}`);
+        const response = await fetch(`${apiURL}search?query=${searchQuery.value}`);
         const data = await response.json();
         console.log('Search results:', data.results);
 

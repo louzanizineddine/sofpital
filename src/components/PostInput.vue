@@ -1,5 +1,6 @@
 <script setup>
 import 'flowbite/dist/flowbite.js'
+import {apiURL} from '../config'
 
 import { ref, onMounted } from 'vue';
 import { useUserStore } from '../stores/user';
@@ -23,7 +24,7 @@ async function publishPost() {
     // Create an array of tag objects
     const tags = tagsArray.map(tag => ({ name: tag }));
 
-    const data = await fetch(`http://localhost:8000/api/learner/${userState.user.learner_id}/posts`, {
+    const data = await fetch(`${apiURL}learner/${userState.user.learner_id}/posts`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

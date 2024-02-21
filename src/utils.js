@@ -10,7 +10,7 @@ function checkToken ()
 
 
 async function getTutorInfo(tutorId){
-    const response = await fetch(`http://localhost:8000/api/tutor/${tutorId}`,
+    const response = await fetch(`${apiURL}tutor/${tutorId}`,
     {
         method: 'GET',
         headers: {
@@ -23,7 +23,7 @@ async function getTutorInfo(tutorId){
 }
 
 async function getLearnerInfo(learnerId){
-    const response = await fetch(`http://localhost:8000/api/learner/${learnerId}`,
+    const response = await fetch(`${apiURL}learner/${learnerId}`,
     {
         method: 'GET',
         headers: {
@@ -37,7 +37,7 @@ async function getLearnerInfo(learnerId){
 }
 
 async function getPostInfo(learnerId,postId){
-    const response = await fetch(`http://localhost:8000/api/learner/${learnerId}/posts/${postId}`,
+    const response = await fetch(`${apiURL}learner/${learnerId}/posts/${postId}`,
     {
         method: 'GET',
         headers: {

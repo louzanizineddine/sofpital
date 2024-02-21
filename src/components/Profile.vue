@@ -1,5 +1,3 @@
-
-
 <template>
     <div class="bg-gray-100">
         <Header />
@@ -176,6 +174,7 @@
 import Header from './Header.vue';
 import { useUserStore } from '../stores/user';
 import { ref, onMounted, watch } from 'vue';
+import {apiURL} from '../config'
 
 const store = useUserStore();
 const dataLoaded = ref(false);

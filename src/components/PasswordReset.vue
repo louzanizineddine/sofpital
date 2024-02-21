@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
+import {apiURL} from '../config'
+
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
@@ -11,7 +13,7 @@ const form = ref({
 
 const handlePasswordReset = async () => {
     try {
-        const response = await fetch('http://localhost:8000/api/auth/reset-password', {
+        const response = await fetch(`${apiURL}auth/reset-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
