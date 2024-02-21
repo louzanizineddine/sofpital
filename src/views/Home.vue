@@ -96,9 +96,8 @@ const router = useRouter();
                 d=" M 510.7 189.151 C 505.271 168.95 484.565 156.956 464.365 162.385 L 330.156 198.367 L 155.924 35.878 L 107.19 49.008 L 211.729 230.183 L 86.232 263.767 L 36.614 224.754 L 0 234.603 L 45.957 314.27 L 65.274 347.727 L 105.802 336.869 L 240.011 300.886 L 349.726 271.469 L 483.935 235.486 C 504.134 230.057 516.129 209.352 510.7 189.151 Z "
               />
             </svg> -->
-              <img src="./Screenshot_from_2024-02-10_14-57-26-removebg-preview (1).png" alt="Icon"
-                style="width: 50px; height: 50px;" class="inline" />
-              Sofpital
+              <img src="./logo.png" alt="Icon"
+                style="width: 80px; height: 80px;" class="inline" />
             </a>
           </div>
           <div class="block lg:hidden pr-4">
@@ -121,15 +120,15 @@ const router = useRouter();
                 <a class="inline-block text-black font-bold no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
                   href="#features">Features</a>
               </li>
-              <li class="mr-3">
+              <!-- <li class="mr-3">
                 <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
-                  href="#"><router-link :to="{ name: 'Login' }">Sign in</router-link></a>
-              </li>
+                href="#"><router-link :to="{ name: 'Login' }">Sign in</router-link></a>
+              </li> -->
             </ul>
-            <button id="navAction"
+            <!-- <button id="navAction"
               class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
               <router-link :to="{ name: 'Register' }">Sign up</router-link>
-            </button>
+            </button> -->
           </div>
         </div>
         <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
