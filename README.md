@@ -1,62 +1,76 @@
-#Table of Contents
+# Sofpital
 
-Table of Contents
+## Overview
 
-Overview
+Sofpital is a groundbreaking web application that aims to redefine how individuals seek assistance for complex problems, transcending traditional web searches.
 
-Features
+## Features
 
-Installation
+- **No Entry Barrier:** Sofpital welcomes everyone, regardless of their level of expertise or field of study.
+  
+- **Diverse Community:** Engage with experts from various domains and students from around the globe.
+  
+- **Real-Time Assistance:** Receive immediate help from professionals by sharing your screen.
 
+## Installation
 
+Follow these simple steps to set up and run Sofpital locally on your machine:
 
-Overview
+### Cloning the Repositories
 
-The sofpital is a web application that signifies a pivotal shift towards revolutionizing how individuals seek assistance for complex problems beyond conventional web searches.
+1. Clone the main application repository:
 
+    ```bash
+    git clone https://github.com/louzanizineddine/sofpital.git
+    cd sofpital
+    ```
 
-Features
+2. Install frontend dependencies:
 
-No entry barrier: Sofpital is open to everyone, does not matter your level of expertise or your field of study.
+    ```bash
+    npm install
+    ```
 
-Diverse Community: In sofpital you will find experts from various fields, and students from all over the world.
+### Running the Frontend
 
+3. Start the application:
 
-Real time assistance: Get real time assistance from experts and professionals, by only sharing your screen.
+    ```bash
+    npm run dev
+    ```
 
-Installation
+### Setting Up the API
 
-To install and run Sofpital locally, follow these steps:
+4. Clone the API repository:
 
-Clone the repositories:
+    ```bash
+    git clone https://github.com/louzanizineddine/sofpital-api.git
+    cd sofpital-api
+    ```
 
-git clone https://github.com/louzanizineddine/sofpital.git
+5. Set up the virtual environment:
 
-cd sofpital
+    ```bash
+    virtualenv venv
+    source venv/bin/activate   # For Unix/Linux
+    ```
 
-install dependencies:
+6. Install API dependencies:
 
-npm install
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Run the application:
+### Running the API
 
-npm run dev
+7. Run the application:
 
-git clone https://github.com/louzanizineddine/sofpital-api.git
+    ```bash
+    python3 -m app.py
+    ```
 
-cd sofpital-api
+Now you're all set to explore Sofpital locally!
 
-Set up the virtual environment:
+## Contribution
 
-virtualenv venv
-
-source venv/bin/activate   # For Unix/Linux
-
-Install dependencies:
-
-
-pip install -r requirements.txt
-
-Run the application:
-
-python3 -m app.py
+We welcome contributions! Feel free to submit issues or pull requests to help improve Sofpital.
