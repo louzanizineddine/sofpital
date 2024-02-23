@@ -32,7 +32,8 @@
               <img class="h-full w-full object-cover md:w-48" :src="getAvatar(meet.learner.avatar)" alt="Avatar">
             </div>
           </div>
-          {{ meet.learner.first_name }} {{ meet.learner.last_name }}
+          <!-- {{ meet.learner.first_name }} {{ meet.learner.last_name }} -->
+          {{ meet.learner.email }}
         </div>
       </td>
       <td>{{ formatDate(meet.date) }}</td>
@@ -54,6 +55,16 @@
         >
           Marked as Done
         </button>
+      </td>
+      <td>
+          <div class="flex justifybetween items-center bg-blue-500 text-white p-2 rounded" v-if="!meet.done">
+            <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
+            <a  href="https://meet.google.com/new?hs=180&amp;authuser=0" >Start Meeting</a>
+          </div> 
+          <div class="flex justifybetween items-center bg-gray-500 text-white p-2 rounded" v-else>
+            <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
+            <span>Start Meeting</span>
+          </div> 
       </td>
     </tr>
   </tbody>
