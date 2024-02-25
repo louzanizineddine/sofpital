@@ -52,7 +52,7 @@
   const results = ref([]);
   const currentPage = ref(1);
   const totalPages = ref(1);
-  const perPage = 6;
+  const perPage = 4;
   const loading = ref(false);
   
   const fetchresults = async () => {

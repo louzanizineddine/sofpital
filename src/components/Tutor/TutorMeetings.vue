@@ -5,9 +5,12 @@
       <h1 class="text-3xl font-bold mt-4 mb-4">Your meetings</h1>
       <!-- Filter buttons -->
       <div class="flex justify-center mt-4 mb-4 space-x-4">
-        <button @click="filterMeetings('all')" :class="{ 'p-2 rounded bg-blue-500 text-white': currentFilter === 'all' }">All</button>
-        <button @click="filterMeetings('done')" :class="{ 'p-2 rounded bg-green-500 text-white': currentFilter === 'done' }">Done</button>
-        <button @click="filterMeetings('upcoming')" :class="{ 'p-2 rounded bg-red-500 text-white': currentFilter === 'upcoming' }">Upcoming</button>
+        <button @click="filterMeetings('all')"
+          :class="{ 'p-2 rounded bg-blue-500 text-white': currentFilter === 'all' }">All</button>
+        <button @click="filterMeetings('done')"
+          :class="{ 'p-2 rounded bg-green-500 text-white': currentFilter === 'done' }">Done</button>
+        <button @click="filterMeetings('upcoming')"
+          :class="{ 'p-2 rounded bg-red-500 text-white': currentFilter === 'upcoming' }">Upcoming</button>
       </div>
       <div class="overflow-x-auto">
         <table class="table">
@@ -22,52 +25,44 @@
             </tr>
           </thead>
           <tbody v-if="filteredMeetings.length > 0">
-    <!-- use v-for to loop through the filteredMeetings array -->
-    <tr v-for="(meet, index) in filteredMeetings" :key="index">
-      <!-- Table rows -->
-      <td>
-        <div class="flex items-center gap-3">
-          <div class="avatar">
-            <div class="mask mask-squircle w-12 h-12">
-              <img class="h-full w-full object-cover md:w-48" :src="getAvatar(meet.learner.avatar)" alt="Avatar">
-            </div>
-          </div>
-          <!-- {{ meet.learner.first_name }} {{ meet.learner.last_name }} -->
-          {{ meet.learner.email }}
-        </div>
-      </td>
-      <td>{{ formatDate(meet.date) }}</td>
-      <td>{{ meet.postTitle }}</td>
-      <td>{{ meet.done ? 'done' : 'not done' }}</td>
-      <td>
-        <!-- Button to mark meeting as done -->
-        <button 
-          v-if="!meet.done" 
-          @click="markMeetingDone(meet)" 
-          class="p-2 rounded bg-green-500 text-white"
-        >
-          Mark as Done
-        </button>
-        <button 
-          v-else 
-          class="p-2 rounded bg-gray-300 text-gray-500" 
-          disabled
-        >
-          Marked as Done
-        </button>
-      </td>
-      <td>
-          <div class="flex justifybetween items-center bg-blue-500 text-white p-2 rounded" v-if="!meet.done">
-            <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
-            <a  href="https://meet.google.com/new?hs=180&amp;authuser=0" >Start Meeting</a>
-          </div> 
-          <div class="flex justifybetween items-center bg-gray-500 text-white p-2 rounded" v-else>
-            <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
-            <span>Start Meeting</span>
-          </div> 
-      </td>
-    </tr>
-  </tbody>
+            <!-- use v-for to loop through the filteredMeetings array -->
+            <tr v-for="(meet, index) in filteredMeetings" :key="index">
+              <!-- Table rows -->
+              <td>
+                <div class="flex items-center gap-3">
+                  <div class="avatar">
+                    <div class="mask mask-squircle w-12 h-12">
+                      <img class="h-full w-full object-cover md:w-48" :src="getAvatar(meet.learner.avatar)" alt="Avatar">
+                    </div>
+                  </div>
+                  <!-- {{ meet.learner.first_name }} {{ meet.learner.last_name }} -->
+                  {{ meet.learner.email }}
+                </div>
+              </td>
+              <td>{{ formatDate(meet.date) }}</td>
+              <td>{{ meet.postTitle }}</td>
+              <td>{{ meet.done ? 'done' : 'not done' }}</td>
+              <td>
+                <!-- Button to mark meeting as done -->
+                <button v-if="!meet.done" @click="markMeetingDone(meet)" class="p-2 rounded bg-green-500 text-white">
+                  Mark as Done
+                </button>
+                <button v-else class="p-2 rounded bg-gray-300 text-gray-500" disabled>
+                  Marked as Done
+                </button>
+              </td>
+              <td>
+                <div class="flex justifybetween items-center bg-blue-500 text-white p-2 rounded cursor-pointer" v-if="!meet.done">
+                  <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
+                  <a @click="startMeeting(meet.learner.email)">Start Meeting</a>
+                </div>
+                <div class="flex justifybetween items-center bg-gray-500 text-white p-2 rounded cursor-not-allowed" v-else>
+                  <img src="./video-call-1.png" alt="Icon" class="w-6 h-6 mx-1">
+                  <span>Start Meeting</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -156,4 +151,17 @@ const markMeetingDone = async (meeting) => {
     console.error('Error marking meeting as done:', error);
   }
 };
+
+const startMeeting = (learnerEmail) => {
+  navigator.clipboard.writeText(learnerEmail)
+    .then(() => {
+      console.log('Email copied to clipboard:', learnerEmail);
+      // redirect to the video call page on a new tab
+      window.open('https://meet.google.com/new?hs=180&amp;authuser=0', '_blank');
+    })
+    .catch(err => {
+      console.error('Failed to copy email to clipboard:', err);
+      window.open('https://meet.google.com/new?hs=180&amp;authuser=0', '_blank');
+    });
+}
 </script>
