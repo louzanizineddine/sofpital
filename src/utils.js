@@ -1,5 +1,7 @@
 // import { atob } from 'atob';
 
+import {apiURL} from "./config"
+
 function checkToken ()
 {
     const token = localStorage.getItem('token');

@@ -11,7 +11,7 @@
             <div class="skeleton w-full h-6"></div>
           </div>
         </div>
-        <div v-else v-for="post in paginatedPosts" :key="post.id" class="card w-96 bg-blue-600 text-primary-content m-4">
+        <div v-else v-for="post in posts" :key="post.id" class="card w-96 bg-blue-600 text-primary-content m-4">
           <div class="card-body">
             <h2 class="card-title">{{ post.title }}</h2>
             <p>{{ post.description }}</p>
@@ -61,6 +61,7 @@
         }
       });
       const data = await response.json();
+      console.log(data);
       posts.value = data.posts;
       totalPages.value = data.total_pages;
     } catch (error) {
@@ -69,18 +70,15 @@
       loading.value = false;
     }
   };
+
+
   onMounted(fetchPosts);
   
-  
   const changePage = (page) => {
+    console.log('page chaged to ', page)
     currentPage.value = page;
     fetchPosts();
   };
   
-  const paginatedPosts = computed(() => {
-    const start = (currentPage.value - 1) * perPage;
-    const end = currentPage.value * perPage;
-    return posts.value.slice(start, end);
-  });
   </script>
   
